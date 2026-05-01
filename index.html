@@ -3,64 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programming Cub | Клуб программистов</title>
+    <title>Programming Cub — клуб программистов</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container">
-        <!-- Шапка -->
-        <div class="header">
-            <h1>💻 Programming Cub</h1>
-            <p>Клуб молодых программистов</p>
+    <!-- Навигация -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Programming Cub</div>
+            <div class="nav-links">
+                <a href="#">Статьи</a>
+                <a href="#">События</a>
+                <a href="#">Сообщество</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Главный блок (Hero) -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Клуб, где программисты<br>растут вместе</h1>
+            <p>Никакой воды. Только опыт, код и живые встречи. Присоединяйся к сообществу, которое помогает становиться лучше каждый день.</p>
+            <a href="#" class="btn">Вступить в клуб →</a>
+        </div>
+    </header>
+
+    <!-- Сетка статей -->
+    <main class="container">
+        <div class="section-header">
+            <h2>Свежие материалы</h2>
+            <a href="#" class="see-all">Все статьи →</a>
         </div>
 
-        <!-- О клубе -->
-        <section class="about">
-            <h2>О нас</h2>
-            <p>Мы — сообщество начинающих разработчиков, которые вместе изучают программирование, делятся опытом и создают крутые проекты. Присоединяйся к нам!</p>
-        </section>
+        <div class="articles-grid">
+            <article class="article-card">
+                <div class="tag">Python</div>
+                <h3>Как не бросить программирование после первой недели</h3>
+                <p>5 конкретных шагов, которые помогут пройти через "момент отчаяния" и выйти на уровень уверенного новичка.</p>
+                <div class="meta">
+                    <span>📅 12 мая 2026</span>
+                    <span>📖 8 мин чтения</span>
+                </div>
+            </article>
 
-        <!-- Статьи -->
-        <section class="articles">
-            <h2>Свежие статьи</h2>
-            
-            <div class="card">
-                <h3>Как начать изучать Python в 2026 году</h3>
-                <p>Пошаговый гайд для новичков: с чего начать, какие ресурсы использовать и как не бросить на полпути...</p>
-                <a href="#" class="read-more">Читать →</a>
-            </div>
+            <article class="article-card">
+                <div class="tag">Карьера</div>
+                <h3>Что ждать на первом собеседовании Junior-разработчика</h3>
+                <p>Реальные вопросы с реальных собесов. Как подготовиться и что учить в первую очередь.</p>
+                <div class="meta">
+                    <span>📅 8 мая 2026</span>
+                    <span>📖 12 мин чтения</span>
+                </div>
+            </article>
 
-            <div class="card">
-                <h3>Топ-5 ошибок на собеседовании Junior</h3>
-                <p>Чего боятся работодатели и как произвести правильное впечатление, даже если мало опыта...</p>
-                <a href="#" class="read-more">Читать →</a>
-            </div>
+            <article class="article-card">
+                <div class="tag">Git</div>
+                <h3>Git для новичка: инструкция без паники</h3>
+                <p>Как перестать бояться merge конфликтов и начать коммитить как профи.</p>
+                <div class="meta">
+                    <span>📅 2 мая 2026</span>
+                    <span>📖 6 мин чтения</span>
+                </div>
+            </article>
 
-            <div class="card">
-                <h3>Git и GitHub: что нужно знать новичку</h3>
-                <p>Объясняем на пальцах, зачем нужны системы контроля версий и как не бояться командной строки...</p>
-                <a href="#" class="read-more">Читать →</a>
-            </div>
-        </section>
-
-        <!-- Мероприятия -->
-        <section class="events">
-            <h2>Ближайшие события</h2>
-            <ul>
-                <li><strong>15 мая</strong> — Вебинар: "Введение в React"</li>
-                <li><strong>22 мая</strong> — Хакатон: создай свой первый пет-проект</li>
-                <li><strong>5 июня</strong> — Разбор типичных ошибок в алгоритмах</li>
-            </ul>
-        </section>
-
-        <!-- Контакты -->
-        <div class="footer">
-            <p>По всем вопросам: <a href="mailto:club@programmingcub.ru">club@programmingcub.ru</a></p>
-            <p>Присоединяйся в <a href="#">Telegram</a> | <a href="#">Discord</a></p>
-            <p class="copyright">© 2026 Programming Cub</p>
+            <article class="article-card">
+                <div class="tag">Менталка</div>
+                <h3>Синдром самозванца в IT: как с ним жить</h3>
+                <p>Личный опыт джуниора, который думал, что его вот-вот уволят. (Спойлер: не уволили).</p>
+                <div class="meta">
+                    <span>📅 28 апреля 2026</span>
+                    <span>📖 5 мин чтения</span>
+                </div>
+            </article>
         </div>
-    </div>
+
+        <!-- Блок с событиями -->
+        <div class="section-header" style="margin-top: 48px;">
+            <h2>Ближайшие встречи</h2>
+            <a href="#" class="see-all">Календарь →</a>
+        </div>
+
+        <div class="events-list">
+            <div class="event-item">
+                <div class="event-date">22<br>мая</div>
+                <div class="event-info">
+                    <h3>Онлайн-митап: «Твой первый опенсорс контрибьют»</h3>
+                    <p>Разбираем на реальном примере, как сделать пул-реквест в большой проект</p>
+                </div>
+            </div>
+            <div class="event-item">
+                <div class="event-date">5<br>июн</div>
+                <div class="event-info">
+                    <h3>Код-ревью вечер: разбор пет-проектов участников</h3>
+                    <p>Присылай свой код — вместе найдем, что улучшить</p>
+                </div>
+            </div>
+            <div class="event-item">
+                <div class="event-date">19<br>июн</div>
+                <div class="event-info">
+                    <h3>Живой стрим: собеседование с реальным тимлидом</h3>
+                    <p>Узнай, что спрашивают на техсобесе и как отвечать</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Подвал -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Programming Cub</h4>
+                <p>Сообщество для начинающих разработчиков, которые хотят расти быстрее.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Навигация</h4>
+                <a href="#">Статьи</a>
+                <a href="#">События</a>
+                <a href="#">Сообщество в TG</a>
+            </div>
+            <div class="footer-section">
+                <h4>Контакты</h4>
+                <a href="#">club@programmingcub.ru</a>
+                <a href="#">Telegram-канал</a>
+                <a href="#">Discord сервер</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Programming Cub. Никакой рекламы, только полезный контент.</p>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
