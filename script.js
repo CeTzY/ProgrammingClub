@@ -54,17 +54,17 @@ if (navHome) {
     });
 }
 
-// КАРТОЧКИ УРОКОВ - ИСПРАВЛЕНО!
+// КАРТОЧКИ УРОКОВ
 const lessonCards = document.querySelectorAll('.lesson-card');
-console.log('Найдено карточек уроков:', lessonCards.length); // Проверка в консоли
+console.log('Найдено карточек уроков:', lessonCards.length);
 
 function openLesson(lessonNum) {
-    console.log('Открываем урок:', lessonNum); // Проверка в консоли
+    console.log('Открываем урок:', lessonNum);
     
     const modal = document.getElementById('lesson-modal');
     const modalBody = document.getElementById('modal-body');
     
-    // Контент уроков
+    // Контент уроков с ИСПРАВЛЕННЫМИ ссылками
     const lessonsContent = {
         1: `
             <div class="lesson-content">
@@ -101,7 +101,7 @@ function openLesson(lessonNum) {
                 </div>
                 
                 <hr>
-                <p>💡 Если непонятно — пиши <strong>@CeTzyyy</strong> в Telegram, объясню в личке!</p>
+                <p>💡 Если непонятно — пиши <strong><a href="https://t.me/CeTzY" target="_blank" style="color: var(--primary);">@CeTzY</a></strong> в Telegram, объясню в личке!</p>
             </div>
         `,
         2: `
@@ -133,6 +133,8 @@ function openLesson(lessonNum) {
                         <li>Выведи "Привет, X! Тебе Y лет"</li>
                     </ol>
                 </div>
+                <hr>
+                <p>💡 Если непонятно — пиши <strong><a href="https://t.me/CeTzY" target="_blank" style="color: var(--primary);">@CeTzY</a></strong> в Telegram, объясню в личке!</p>
             </div>
         `,
         3: `
@@ -167,6 +169,8 @@ function openLesson(lessonNum) {
                         <li>Если больше 65 → "Тебе нужно отдохнуть"</li>
                     </ol>
                 </div>
+                <hr>
+                <p>💡 Если непонятно — пиши <strong><a href="https://t.me/CeTzY" target="_blank" style="color: var(--primary);">@CeTzY</a></strong> в Telegram, объясню в личке!</p>
             </div>
         `,
         4: `
@@ -199,6 +203,8 @@ function openLesson(lessonNum) {
                         <li>Спроси возраст и выведи "Доступ разрешён" если 18-65</li>
                     </ol>
                 </div>
+                <hr>
+                <p>💡 Если непонятно — пиши <strong><a href="https://t.me/CeTzY" target="_blank" style="color: var(--primary);">@CeTzY</a></strong> в Telegram, объясню в личке!</p>
             </div>
         `,
         5: `
@@ -229,9 +235,8 @@ function openLesson(lessonNum) {
                         <li>Сделай игру "Угадай число" (загадай 7, давай подсказки "больше/меньше")</li>
                     </ol>
                 </div>
-                
                 <hr>
-                <p>💡 Непонятно? Пиши <strong>@CeTzyyy</strong> — объясню в личке!</p>
+                <p>💡 Если непонятно — пиши <strong><a href="https://t.me/CeTzY" target="_blank" style="color: var(--primary);">@CeTzY</a></strong> в Telegram, объясню в личке!</p>
             </div>
         `
     };
@@ -309,3 +314,4 @@ console.log('%c💬 Чат: https://t.me/programming_club_CeTzY', 'color: #00b8f
 console.log('%c🐍 Уроки: https://t.me/CeTzYPythonLessons', 'color: #00ff88');
 console.log('%c🤖 Бот: https://t.me/ProgClubBot_bot', 'color: #ffbb33');
 console.log('%c📚 Кликни на любой урок — он откроется!', 'color: #00ff88');
+console.log('%c💬 Контакт автора: https://t.me/CeTzY', 'color: #00ff88');
