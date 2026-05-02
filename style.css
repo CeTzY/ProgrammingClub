@@ -11,66 +11,40 @@
     --border: #27272a;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-    font-family: 'Fira Code', 'Courier New', 'SF Mono', monospace;
+    font-family: 'Fira Code', monospace;
     background: var(--bg-dark);
     color: var(--text);
-    line-height: 1.6;
-    overflow-x: hidden;
-    padding-bottom: 80px;
+    padding-bottom: 70px;
 }
 
-/* ========== ВЕРХНЯЯ ПАНЕЛЬ ========== */
+/* Верхняя панель */
 .top-bar {
     background: var(--bg-terminal);
     padding: 8px 20px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
     border-bottom: 1px solid var(--border);
     font-size: 12px;
-    font-family: monospace;
     position: sticky;
     top: 0;
-    z-index: 101;
+    z-index: 100;
 }
-
-.terminal-dots {
-    display: flex;
-    gap: 8px;
-}
-
-.dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-}
-
+.terminal-dots { display: flex; gap: 8px; }
+.dot { width: 12px; height: 12px; border-radius: 50%; }
 .dot.red { background: #ff5f56; }
 .dot.yellow { background: #ffbd2e; }
 .dot.green { background: #27c93f; }
-
-.terminal-path {
-    color: var(--primary);
-}
-
-.terminal-status {
-    color: var(--primary);
-    animation: pulse 2s infinite;
-}
-
+.terminal-path { color: var(--primary); }
+.terminal-status { color: var(--primary); animation: pulse 2s infinite; }
 @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.5; }
 }
 
-/* ========== НИЖНИЙ ХОТБАР ========== */
+/* Нижнее меню */
 .bottom-nav {
     position: fixed;
     bottom: 0;
@@ -83,8 +57,7 @@ body {
     padding: 8px 16px 12px;
     z-index: 100;
 }
-
-.bottom-nav-btn {
+.nav-btn {
     background: none;
     border: none;
     color: var(--text-muted);
@@ -94,73 +67,26 @@ body {
     cursor: pointer;
     padding: 6px 12px;
     border-radius: 8px;
-    transition: all 0.2s;
 }
+.nav-btn span { display: block; font-size: 10px; margin-top: 4px; }
+.nav-btn:hover, .nav-btn.active { color: var(--primary); background: rgba(0,255,136,0.1); }
 
-.bottom-nav-btn span {
-    font-size: 10px;
-    display: block;
-    margin-top: 4px;
-}
+/* Контейнер */
+.container { max-width: 800px; margin: 0 auto; padding: 20px; }
 
-.bottom-nav-btn:hover {
-    color: var(--primary);
-    background: rgba(0, 255, 136, 0.1);
-}
+/* Страницы */
+.page { display: none; animation: fadeIn 0.3s; }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-.bottom-nav-btn.active {
-    color: var(--primary);
-}
-
-/* ========== СТРАНИЦЫ ========== */
-.page {
-    display: none;
-    padding: 20px;
-    animation: fadeIn 0.3s;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.page.active {
-    display: block;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* ========== РАЗВЁРНУТОЕ ДЗ ========== */
-.hw-header {
-    text-align: center;
-    margin-bottom: 24px;
-}
-
-.hw-header h2 {
-    color: var(--primary);
-    font-size: 22px;
-}
-
-.hw-deadline {
-    color: var(--warning);
-    font-size: 14px;
-    margin-top: 8px;
-}
-
+/* ДЗ карточки */
 .hw-card {
     background: var(--bg-card);
     border-radius: 16px;
     padding: 20px;
     margin-bottom: 24px;
     border: 1px solid var(--border);
-    transition: all 0.3s;
 }
-
-.hw-card:hover {
-    border-color: var(--primary);
-    box-shadow: 0 4px 20px rgba(0, 255, 136, 0.1);
-}
-
 .hw-level {
     display: inline-block;
     padding: 4px 12px;
@@ -168,69 +94,27 @@ body {
     font-size: 12px;
     margin-bottom: 12px;
 }
-
-.hw-level.easy {
-    background: rgba(0, 255, 136, 0.1);
-    color: #00ff88;
-}
-
-.hw-level.medium {
-    background: rgba(255, 193, 7, 0.1);
-    color: #ffc107;
-}
-
-.hw-level.hard {
-    background: rgba(255, 68, 68, 0.1);
-    color: #ff4444;
-}
-
-.hw-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 12px;
-}
-
-.hw-description {
-    color: var(--text-muted);
-    margin-bottom: 16px;
-    line-height: 1.5;
-}
-
+.hw-level.easy { background: rgba(0,255,136,0.1); color: #00ff88; }
+.hw-level.medium { background: rgba(255,193,7,0.1); color: #ffc107; }
+.hw-level.hard { background: rgba(255,68,68,0.1); color: #ff4444; }
+.hw-title { font-size: 20px; font-weight: bold; margin-bottom: 12px; }
+.hw-description { color: var(--text-muted); margin-bottom: 16px; }
 .hw-section {
     margin: 16px 0;
     padding: 12px;
     background: var(--bg-dark);
     border-radius: 10px;
 }
-
-.hw-section-title {
-    color: var(--secondary);
-    font-size: 13px;
-    margin-bottom: 8px;
-    font-weight: bold;
-}
-
-.hw-example, .hw-hint {
-    color: var(--text);
-    font-family: monospace;
-    font-size: 13px;
-    white-space: pre-wrap;
-}
-
-.hw-topics {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
+.hw-section-title { color: var(--secondary); font-size: 13px; margin-bottom: 8px; }
+.hw-example, .hw-hint { font-family: monospace; font-size: 13px; white-space: pre-wrap; }
+.hw-topics { display: flex; flex-wrap: wrap; gap: 8px; }
 .hw-topics span {
-    background: rgba(0, 184, 255, 0.1);
+    background: rgba(0,184,255,0.1);
     padding: 4px 10px;
     border-radius: 20px;
     font-size: 12px;
     color: var(--secondary);
 }
-
 .hw-submit-btn {
     width: 100%;
     padding: 12px;
@@ -241,73 +125,34 @@ body {
     font-weight: bold;
     margin-top: 16px;
     cursor: pointer;
-    transition: transform 0.2s;
-    font-family: monospace;
 }
+.hw-submit-btn:hover { transform: scale(1.02); }
 
-.hw-submit-btn:hover {
-    transform: scale(1.02);
-    box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
-}
-
-/* ========== МОДАЛЬНОЕ ОКНО ========== */
+/* Модалка */
 .modal-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.95);
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.95);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
 }
-
 .modal-window {
     background: var(--bg-card);
     border-radius: 16px;
     width: 90%;
     max-width: 500px;
     border: 1px solid var(--primary);
-    animation: modalFadeIn 0.3s;
 }
-
-@keyframes modalFadeIn {
-    from { opacity: 0; transform: translateY(-30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
 .modal-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     padding: 16px;
     border-bottom: 1px solid var(--border);
 }
-
-.modal-header span {
-    color: var(--primary);
-    font-weight: bold;
-}
-
-.modal-close {
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    font-size: 24px;
-    cursor: pointer;
-    transition: color 0.2s;
-}
-
-.modal-close:hover {
-    color: var(--error);
-}
-
-.modal-body {
-    padding: 16px;
-}
-
+.modal-close { background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; }
+.modal-body { padding: 16px; }
 #modal-code-input {
     width: 100%;
     background: var(--bg-dark);
@@ -315,394 +160,95 @@ body {
     border-radius: 8px;
     padding: 12px;
     color: var(--text);
-    font-family: 'Fira Code', monospace;
-    font-size: 13px;
+    font-family: monospace;
     resize: vertical;
 }
-
-#modal-code-input:focus {
-    outline: none;
-    border-color: var(--primary);
-}
-
 .modal-footer {
     display: flex;
     gap: 12px;
     padding: 16px;
     border-top: 1px solid var(--border);
 }
-
-.modal-cancel {
+.modal-cancel, .modal-submit {
     flex: 1;
     padding: 10px;
-    background: var(--bg-dark);
-    border: 1px solid var(--border);
     border-radius: 8px;
-    color: var(--text);
     cursor: pointer;
-    font-family: monospace;
-    transition: all 0.2s;
 }
+.modal-cancel { background: var(--bg-dark); border: 1px solid var(--border); color: var(--text); }
+.modal-submit { background: var(--primary); border: none; color: var(--bg-dark); font-weight: bold; }
 
-.modal-cancel:hover {
-    border-color: var(--error);
-    color: var(--error);
-}
-
-.modal-submit {
-    flex: 1;
-    padding: 10px;
-    background: var(--primary);
-    border: none;
-    border-radius: 8px;
-    color: var(--bg-dark);
-    font-weight: bold;
-    cursor: pointer;
-    font-family: monospace;
-    transition: all 0.2s;
-}
-
-.modal-submit:hover {
-    transform: scale(1.02);
-    box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
-}
-
-/* ========== УРОКИ ========== */
-.section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    gap: 12px;
-}
-
-.section-header h2 {
-    font-size: 20px;
-    color: var(--primary);
-    font-family: monospace;
-}
-
-.lessons-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
+/* Уроки */
 .lesson-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 16px;
+    margin-bottom: 12px;
     display: flex;
     gap: 16px;
-    transition: all 0.3s;
     cursor: pointer;
 }
+.lesson-card:hover { border-color: var(--primary); transform: translateX(5px); }
+.lesson-number { font-size: 28px; font-weight: bold; color: var(--primary); min-width: 50px; }
+.lesson-info h3 { font-size: 16px; margin-bottom: 6px; }
+.lesson-info p { color: var(--text-muted); font-size: 12px; }
+.lesson-meta { font-size: 11px; color: var(--text-muted); margin-top: 8px; }
 
-.lesson-card:hover {
-    transform: translateX(5px);
-    border-color: var(--primary);
-    box-shadow: 0 4px 20px rgba(0, 255, 136, 0.1);
-}
-
-.lesson-number {
-    font-size: 28px;
-    font-weight: bold;
-    color: var(--primary);
-    font-family: monospace;
-    min-width: 50px;
-    text-align: center;
-}
-
-.lesson-info {
-    flex: 1;
-}
-
-.lesson-info h3 {
-    font-size: 16px;
-    margin-bottom: 6px;
-}
-
-.lesson-info p {
-    color: var(--text-muted);
-    font-size: 12px;
-    margin-bottom: 8px;
-    line-height: 1.4;
-}
-
-.lesson-meta {
-    display: flex;
-    gap: 12px;
-    font-size: 11px;
-    color: var(--text-muted);
-}
-
-/* ========== ТОП ЛИСТ ========== */
-.top-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
+/* Топ */
 .top-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 16px;
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 12px 16px;
-    background: var(--bg-card);
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    transition: transform 0.2s;
+    margin-bottom: 8px;
 }
+.top-medal { font-size: 24px; width: 40px; }
+.top-name { flex: 1; }
+.top-exp { color: var(--primary); font-weight: bold; }
+.top-rank { font-size: 11px; background: rgba(0,255,136,0.1); padding: 4px 10px; border-radius: 20px; }
 
-.top-item:hover {
-    transform: translateX(5px);
-    border-color: var(--primary);
-}
-
-.top-medal {
-    font-size: 24px;
-    width: 40px;
-    text-align: center;
-}
-
-.top-name {
-    flex: 1;
-    font-weight: 500;
-    font-size: 14px;
-}
-
-.top-exp {
-    color: var(--primary);
-    font-weight: bold;
-    font-size: 13px;
-}
-
-.top-rank {
-    font-size: 11px;
-    color: var(--text-muted);
-    background: rgba(0, 255, 136, 0.1);
-    padding: 4px 10px;
-    border-radius: 20px;
-}
-
-/* ========== ПРОФИЛЬ ========== */
+/* Профиль */
 .profile-card {
     background: var(--bg-card);
     border-radius: 20px;
     padding: 28px;
     text-align: center;
-    border: 1px solid var(--border);
 }
-
-.avatar {
-    font-size: 72px;
-    margin-bottom: 12px;
-}
-
-#user-name {
-    font-size: 22px;
-    margin-bottom: 8px;
-}
-
+.avatar { font-size: 72px; margin-bottom: 12px; }
 .rank-badge {
     display: inline-block;
     padding: 6px 20px;
-    background: rgba(0, 255, 136, 0.1);
+    background: rgba(0,255,136,0.1);
     border-radius: 30px;
     color: var(--primary);
-    font-size: 14px;
-    font-weight: 500;
     margin: 12px 0;
 }
-
-.exp-bar-container {
-    margin: 20px 0;
-}
-
 .exp-bar {
     background: var(--bg-dark);
     border-radius: 10px;
     height: 12px;
     overflow: hidden;
 }
-
 .exp-fill {
     background: linear-gradient(90deg, var(--primary), #00ffaa);
     height: 100%;
     width: 0%;
-    transition: width 0.5s ease;
 }
-
-.exp-text {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 8px;
-}
-
-.stats-grid-mini {
+.stats-grid {
     display: flex;
     justify-content: space-around;
     margin-top: 24px;
     padding-top: 20px;
     border-top: 1px solid var(--border);
 }
+.stat { text-align: center; font-size: 13px; color: var(--text-muted); }
+.stat span { display: block; font-size: 24px; font-weight: bold; color: var(--primary); }
 
-.stat-mini {
-    text-align: center;
-    font-size: 13px;
-    color: var(--text-muted);
-}
-
-.stat-mini span {
-    display: block;
-    font-size: 24px;
-    font-weight: bold;
-    color: var(--primary);
-    margin-top: 6px;
-}
-
-/* ========== КНОПКИ И ЭЛЕМЕНТЫ ========== */
-.see-all {
-    text-decoration: none;
-    color: var(--text-muted);
-    font-size: 12px;
-    transition: color 0.3s;
-}
-
-.see-all:hover {
-    color: var(--primary);
-}
-
-.loading {
-    text-align: center;
-    color: var(--text-muted);
-    padding: 40px;
-}
-
-/* ========== АДАПТАЦИЯ ПОД ТЕЛЕФОН ========== */
 @media (max-width: 768px) {
-    .top-bar {
-        font-size: 10px;
-        padding: 6px 12px;
-    }
-    
-    .terminal-path {
-        font-size: 9px;
-    }
-    
-    .bottom-nav-btn {
-        font-size: 10px;
-        padding: 4px 8px;
-    }
-    
-    .bottom-nav-btn span {
-        font-size: 9px;
-    }
-    
-    .page {
-        padding: 16px;
-    }
-    
-    .hw-title {
-        font-size: 18px;
-    }
-    
-    .hw-section {
-        padding: 10px;
-    }
-    
-    .hw-section-title {
-        font-size: 12px;
-    }
-    
-    .hw-example, .hw-hint {
-        font-size: 11px;
-    }
-    
-    .modal-window {
-        width: 95%;
-    }
-    
-    .lesson-card {
-        padding: 12px;
-        gap: 12px;
-    }
-    
-    .lesson-number {
-        font-size: 22px;
-        min-width: 40px;
-    }
-    
-    .lesson-info h3 {
-        font-size: 14px;
-    }
-    
-    .top-item {
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-    
-    .top-medal {
-        width: 35px;
-        font-size: 20px;
-    }
-    
-    .top-rank {
-        margin-left: 47px;
-    }
-    
-    .profile-card {
-        padding: 20px;
-    }
-    
-    .avatar {
-        font-size: 56px;
-    }
-    
-    #user-name {
-        font-size: 18px;
-    }
-    
-    .stats-grid-mini {
-        flex-direction: column;
-        gap: 16px;
-    }
-}
-
-@media (max-width: 480px) {
-    .hw-card {
-        padding: 16px;
-    }
-    
-    .hw-level {
-        font-size: 10px;
-    }
-    
-    .modal-footer {
-        flex-direction: column;
-    }
-    
-    .top-item {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .top-medal {
-        width: auto;
-    }
-    
-    .top-rank {
-        margin-left: 0;
-    }
-    
-    .lesson-card {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .lesson-number {
-        text-align: left;
-    }
+    .container { padding: 16px; }
+    .hw-title { font-size: 18px; }
 }
