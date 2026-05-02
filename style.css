@@ -61,21 +61,16 @@ body {
 .dot.yellow { background: #ffbd2e; }
 .dot.green { background: #27c93f; }
 
-.dot:hover {
-    opacity: 0.8;
-}
-
 .terminal-path {
     color: var(--primary);
     font-weight: 500;
-    letter-spacing: 0.5px;
 }
 
 .terminal-status {
     color: var(--primary);
     animation: pulse 2s infinite;
-    text-transform: uppercase;
     font-size: 10px;
+    text-transform: uppercase;
 }
 
 @keyframes pulse {
@@ -96,7 +91,6 @@ body {
     justify-content: space-around;
     padding: 8px 16px 12px;
     z-index: 100;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .nav-btn {
@@ -109,7 +103,7 @@ body {
     cursor: pointer;
     padding: 6px 12px;
     border-radius: 8px;
-    transition: all 0.2s ease;
+    transition: all 0.2s;
 }
 
 .nav-btn span {
@@ -118,15 +112,12 @@ body {
     margin-top: 4px;
 }
 
-.nav-btn:hover {
+.nav-btn:hover, .nav-btn.active {
     color: var(--primary);
     background: rgba(0, 255, 136, 0.1);
-    transform: translateY(-2px);
 }
 
 .nav-btn.active {
-    color: var(--primary);
-    background: rgba(0, 255, 136, 0.15);
     box-shadow: var(--glow-primary);
 }
 
@@ -135,22 +126,14 @@ body {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    animation: fadeInPage 0.4s ease-out;
 }
 
-@keyframes fadeInPage {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* ========== ЗАГОЛОВКИ СЕКЦИЙ ========== */
+/* ========== ЗАГОЛОВКИ ========== */
 .section-header {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    gap: 12px;
+    margin-bottom: 24px;
     padding-bottom: 8px;
     border-bottom: 1px solid var(--border);
 }
@@ -159,67 +142,75 @@ body {
     font-size: 20px;
     color: var(--primary);
     font-family: monospace;
-    letter-spacing: -0.5px;
-}
-
-.section-header span {
-    font-size: 12px;
-    color: var(--text-muted);
 }
 
 /* ========== СТРАНИЦЫ ========== */
 .page {
     display: none;
-    animation: fadeInPage 0.3s ease;
+    animation: fadeIn 0.3s;
 }
 
 .page.active {
     display: block;
 }
 
-/* ========== РАЗВЁРНУТОЕ ДЗ ========== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== ДЗ — АККУРАТНАЯ СЕТКА В РАМОЧКАХ ========== */
 .hw-header {
     text-align: center;
-    margin-bottom: 28px;
+    margin-bottom: 32px;
     padding-bottom: 16px;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 2px solid var(--border);
 }
 
 .hw-header h2 {
     color: var(--primary);
     font-size: 24px;
-    letter-spacing: -0.5px;
 }
 
 .hw-deadline {
     color: var(--warning);
     font-size: 14px;
     margin-top: 8px;
-    font-weight: 500;
+}
+
+.hw-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
 .hw-card {
     background: var(--bg-card);
     border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 24px;
     border: 1px solid var(--border);
-    transition: all 0.3s ease;
+    overflow: hidden;
+    transition: all 0.3s;
 }
 
 .hw-card:hover {
     border-color: var(--primary);
-    box-shadow: 0 8px 32px rgba(0, 255, 136, 0.1);
+    box-shadow: 0 6px 24px rgba(0, 255, 136, 0.1);
     transform: translateY(-2px);
+}
+
+.hw-card-header {
+    padding: 16px 20px;
+    background: var(--bg-terminal);
+    border-bottom: 1px solid var(--border);
 }
 
 .hw-level {
     display: inline-block;
     padding: 4px 14px;
     border-radius: 30px;
-    font-size: 12px;
-    font-weight: 500;
-    margin-bottom: 14px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 .hw-level.easy {
@@ -238,17 +229,21 @@ body {
 }
 
 .hw-title {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
-    margin-bottom: 12px;
-    line-height: 1.4;
+    margin-top: 8px;
+    color: var(--text);
+}
+
+.hw-card-body {
+    padding: 20px;
 }
 
 .hw-description {
     color: var(--text-muted);
-    margin-bottom: 18px;
-    line-height: 1.6;
     font-size: 14px;
+    margin-bottom: 20px;
+    line-height: 1.5;
 }
 
 .hw-section {
@@ -261,54 +256,54 @@ body {
 
 .hw-section-title {
     color: var(--secondary);
-    font-size: 12px;
+    font-size: 11px;
     font-weight: bold;
-    margin-bottom: 8px;
     text-transform: uppercase;
+    margin-bottom: 8px;
     letter-spacing: 0.5px;
 }
 
 .hw-example, .hw-hint {
-    color: var(--text);
     font-family: monospace;
     font-size: 13px;
     white-space: pre-wrap;
     line-height: 1.5;
+    color: var(--text);
 }
 
 .hw-topics {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+    margin-top: 8px;
 }
 
 .hw-topics span {
-    background: rgba(0, 184, 255, 0.12);
+    background: rgba(0, 184, 255, 0.1);
     padding: 4px 12px;
     border-radius: 30px;
     font-size: 11px;
     color: var(--secondary);
-    transition: all 0.2s;
 }
 
-.hw-topics span:hover {
-    background: rgba(0, 184, 255, 0.25);
-    transform: scale(1.02);
+.hw-card-footer {
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+    background: var(--bg-terminal);
 }
 
 .hw-submit-btn {
     width: 100%;
-    padding: 14px;
+    padding: 12px;
     background: var(--primary);
     color: var(--bg-dark);
     border: none;
     border-radius: 40px;
     font-weight: bold;
-    font-size: 14px;
     font-family: monospace;
-    margin-top: 18px;
+    font-size: 13px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.2s;
 }
 
 .hw-submit-btn:hover {
@@ -316,11 +311,7 @@ body {
     box-shadow: var(--glow-primary);
 }
 
-.hw-submit-btn:active {
-    transform: scale(0.98);
-}
-
-/* ========== МОДАЛЬНОЕ ОКНО ========== */
+/* ========== МОДАЛКА ========== */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -341,13 +332,12 @@ body {
     width: 90%;
     max-width: 500px;
     border: 1px solid var(--primary);
-    box-shadow: var(--shadow);
-    animation: modalSlideIn 0.3s ease;
+    animation: modalIn 0.3s;
 }
 
-@keyframes modalSlideIn {
-    from { opacity: 0; transform: translateY(-30px) scale(0.95); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
+@keyframes modalIn {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .modal-header {
@@ -361,7 +351,6 @@ body {
 .modal-header span {
     color: var(--primary);
     font-weight: bold;
-    font-size: 16px;
 }
 
 .modal-close {
@@ -370,12 +359,8 @@ body {
     color: var(--text-muted);
     font-size: 24px;
     cursor: pointer;
-    transition: color 0.2s;
     width: 32px;
     height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     border-radius: 50%;
 }
 
@@ -395,16 +380,14 @@ body {
     border-radius: 12px;
     padding: 14px;
     color: var(--text);
-    font-family: 'Fira Code', monospace;
+    font-family: monospace;
     font-size: 13px;
     resize: vertical;
-    line-height: 1.5;
 }
 
 #modal-code-input:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: var(--glow-primary);
 }
 
 .modal-footer {
@@ -422,8 +405,6 @@ body {
     border-radius: 30px;
     color: var(--text);
     cursor: pointer;
-    font-family: monospace;
-    transition: all 0.2s;
 }
 
 .modal-cancel:hover {
@@ -440,45 +421,41 @@ body {
     color: var(--bg-dark);
     font-weight: bold;
     cursor: pointer;
-    font-family: monospace;
-    transition: all 0.2s;
 }
 
 .modal-submit:hover {
     transform: scale(1.02);
-    box-shadow: var(--glow-primary);
 }
 
-/* ========== КАРТОЧКИ УРОКОВ ========== */
+/* ========== УРОКИ ========== */
+.lessons-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
 .lesson-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 16px;
-    margin-bottom: 12px;
     display: flex;
     gap: 16px;
     cursor: pointer;
-    transition: all 0.25s ease;
+    transition: all 0.2s;
 }
 
 .lesson-card:hover {
     border-color: var(--primary);
     transform: translateX(6px);
-    box-shadow: 0 4px 20px rgba(0, 255, 136, 0.1);
 }
 
 .lesson-number {
     font-size: 28px;
     font-weight: bold;
     color: var(--primary);
-    font-family: monospace;
-    min-width: 55px;
+    min-width: 50px;
     text-align: center;
-}
-
-.lesson-info {
-    flex: 1;
 }
 
 .lesson-info h3 {
@@ -489,18 +466,15 @@ body {
 .lesson-info p {
     color: var(--text-muted);
     font-size: 13px;
-    line-height: 1.4;
     margin-bottom: 8px;
 }
 
 .lesson-meta {
-    display: flex;
-    gap: 12px;
     font-size: 11px;
     color: var(--text-muted);
 }
 
-/* ========== ТОП ЛИСТ ========== */
+/* ========== ТОП ========== */
 .top-list {
     display: flex;
     flex-direction: column;
@@ -515,7 +489,7 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    transition: all 0.2s;
+    transition: 0.2s;
 }
 
 .top-item:hover {
@@ -524,26 +498,23 @@ body {
 }
 
 .top-medal {
-    font-size: 26px;
-    width: 45px;
+    font-size: 24px;
+    width: 40px;
     text-align: center;
 }
 
 .top-name {
     flex: 1;
     font-weight: 500;
-    font-size: 14px;
 }
 
 .top-exp {
     color: var(--primary);
     font-weight: bold;
-    font-size: 13px;
 }
 
 .top-rank {
     font-size: 11px;
-    color: var(--text-muted);
     background: rgba(0, 255, 136, 0.1);
     padding: 4px 12px;
     border-radius: 30px;
@@ -559,24 +530,22 @@ body {
 }
 
 .avatar {
-    font-size: 80px;
+    font-size: 72px;
     margin-bottom: 12px;
 }
 
 #user-name {
     font-size: 22px;
-    font-weight: bold;
     margin-bottom: 8px;
 }
 
 .rank-badge {
     display: inline-block;
     padding: 6px 20px;
-    background: rgba(0, 255, 136, 0.12);
+    background: rgba(0, 255, 136, 0.1);
     border-radius: 40px;
     color: var(--primary);
     font-size: 13px;
-    font-weight: 500;
     margin: 12px 0;
 }
 
@@ -595,8 +564,7 @@ body {
     background: linear-gradient(90deg, var(--primary), #00ffaa);
     height: 100%;
     width: 0%;
-    transition: width 0.5s ease;
-    border-radius: 20px;
+    transition: width 0.5s;
 }
 
 .exp-text {
@@ -621,53 +589,14 @@ body {
 
 .stat span {
     display: block;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: bold;
     color: var(--primary);
     margin-top: 6px;
 }
 
-/* ========== ДОПОЛНИТЕЛЬНЫЕ ЭЛЕМЕНТЫ ========== */
-.loading {
-    text-align: center;
-    color: var(--text-muted);
-    padding: 60px;
-    font-family: monospace;
-}
-
-.error-message {
-    text-align: center;
-    color: var(--error);
-    padding: 40px;
-    background: var(--bg-card);
-    border-radius: 16px;
-    border: 1px solid var(--error);
-}
-
-/* ========== АДАПТАЦИЯ ПОД ТЕЛЕФОН ========== */
+/* ========== АДАПТАЦИЯ ========== */
 @media (max-width: 768px) {
-    .top-bar {
-        padding: 6px 16px;
-        font-size: 10px;
-    }
-    
-    .terminal-path {
-        font-size: 9px;
-    }
-    
-    .bottom-nav {
-        padding: 6px 12px 10px;
-    }
-    
-    .nav-btn {
-        font-size: 11px;
-        padding: 4px 8px;
-    }
-    
-    .nav-btn span {
-        font-size: 9px;
-    }
-    
     .container {
         padding: 16px;
     }
@@ -676,43 +605,16 @@ body {
         font-size: 20px;
     }
     
+    .hw-card-header, .hw-card-body, .hw-card-footer {
+        padding: 14px 16px;
+    }
+    
     .hw-title {
-        font-size: 18px;
+        font-size: 16px;
     }
     
     .hw-description {
         font-size: 13px;
-    }
-    
-    .hw-section {
-        padding: 10px;
-    }
-    
-    .hw-section-title {
-        font-size: 11px;
-    }
-    
-    .hw-example, .hw-hint {
-        font-size: 11px;
-    }
-    
-    .hw-topics span {
-        font-size: 10px;
-        padding: 3px 10px;
-    }
-    
-    .hw-submit-btn {
-        padding: 12px;
-        font-size: 13px;
-    }
-    
-    .modal-window {
-        width: 95%;
-    }
-    
-    .lesson-card {
-        padding: 14px;
-        gap: 12px;
     }
     
     .lesson-number {
@@ -720,104 +622,27 @@ body {
         min-width: 45px;
     }
     
-    .lesson-info h3 {
-        font-size: 14px;
-    }
-    
-    .lesson-info p {
-        font-size: 12px;
-    }
-    
-    .top-item {
-        flex-wrap: wrap;
-        gap: 8px;
-        padding: 12px;
-    }
-    
-    .top-medal {
-        width: 40px;
-        font-size: 22px;
-    }
-    
-    .top-name {
-        font-size: 13px;
-    }
-    
-    .top-exp {
-        font-size: 12px;
-    }
-    
-    .top-rank {
-        margin-left: 52px;
-        font-size: 10px;
-    }
-    
     .profile-card {
         padding: 24px 16px;
     }
     
     .avatar {
-        font-size: 64px;
+        font-size: 56px;
     }
     
     #user-name {
         font-size: 18px;
     }
     
-    .rank-badge {
-        font-size: 12px;
-        padding: 5px 16px;
-    }
-    
     .stats-grid {
         flex-direction: column;
         gap: 16px;
     }
-    
-    .stat {
-        font-size: 12px;
-    }
-    
-    .stat span {
-        font-size: 20px;
-    }
 }
 
 @media (max-width: 480px) {
-    .container {
-        padding: 12px;
-    }
-    
-    .hw-card {
-        padding: 16px;
-    }
-    
-    .hw-level {
-        font-size: 10px;
-        padding: 3px 10px;
-    }
-    
-    .modal-footer {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .modal-cancel, .modal-submit {
-        padding: 10px;
-    }
-    
-    .lesson-card {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .lesson-number {
-        text-align: left;
-    }
-    
     .top-item {
-        flex-direction: column;
-        align-items: flex-start;
+        flex-wrap: wrap;
     }
     
     .top-medal {
@@ -825,34 +650,14 @@ body {
     }
     
     .top-rank {
-        margin-left: 0;
+        margin-left: 52px;
     }
-}
-
-/* ========== АНИМАЦИИ ДЛЯ ИНТЕРАКТИВНОСТИ ========== */
-button, .nav-btn, .lesson-card, .top-item, .hw-card {
-    cursor: pointer;
-    user-select: none;
-}
-
-button:active, .nav-btn:active {
-    transform: scale(0.97);
-}
-
-/* ========== ПРОКРУТКА ========== */
-::-webkit-scrollbar {
-    width: 6px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--bg-dark);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--primary);
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--secondary);
+    
+    .lesson-card {
+        flex-direction: column;
+    }
+    
+    .lesson-number {
+        text-align: left;
+    }
 }
