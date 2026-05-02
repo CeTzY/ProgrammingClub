@@ -1,319 +1,260 @@
-// ========== TELEGRAM WEB APP API ==========
+// ========== TELEGRAM WEB APP ==========
 let tg = window.Telegram?.WebApp;
-let userData = null;
+let userId = null;
+let userName = "";
+let selectedLevel = null;
 
 if (tg) {
-    // Сообщаем Telegram, что приложение готово
     tg.ready();
-    tg.expand(); // Раскрываем на весь экран
-    
-    // Получаем данные пользователя
-    userData = tg.initDataUnsafe?.user;
-    
-    if (userData) {
-        const firstName = userData.first_name || '';
-        const lastName = userData.last_name || '';
-        const username = userData.username || '';
-        const fullName = `${firstName} ${lastName}`.trim();
-        
-        // Приветствие с именем пользователя
-        const greetingEl = document.getElementById('user-greeting');
-        if (greetingEl) {
-            if (fullName) {
-                greetingEl.innerHTML = `> Привет, <span style="color: var(--primary);">${fullName}</span>! Добро пожаловать в Programming Cub 🚀`;
-            } else if (username) {
-                greetingEl.innerHTML = `> Привет, @${username}! Рад видеть тебя в клубе 🔥`;
-            } else {
-                greetingEl.innerHTML = `> Добро пожаловать в Programming Cub! Учим код без боли 🐍`;
-            }
-        }
-        
-        // Отправляем данные аналитики (опционально)
-        console.log('Пользователь в Telegram:', { id: userData.id, fullName, username });
-    } else {
-        document.getElementById('user-greeting').innerHTML = '> Добро пожаловать в Programming Cub! 🚀';
+    tg.expand();
+    const user = tg.initDataUnsafe?.user;
+    if (user) {
+        userId = user.id;
+        userName = user.first_name || "Участник";
+        document.getElementById("user-name").innerText = userName;
     }
-    
-    // Настройка главной кнопки (если нужна)
-    tg.MainButton?.hide();
-} else {
-    console.log('Запущено вне Telegram');
-    document.getElementById('user-greeting').innerHTML = '> Добро пожаловать в Programming Cub! 🚀';
 }
 
 // ========== HAPTIC FEEDBACK ==========
-function hapticFeedback(style = 'light') {
+function hapticFeedback(style = "light") {
     if (tg?.HapticFeedback) {
-        switch(style) {
-            case 'light':
-                tg.HapticFeedback.impactOccurred('light');
-                break;
-            case 'medium':
-                tg.HapticFeedback.impactOccurred('medium');
-                break;
-            case 'heavy':
-                tg.HapticFeedback.impactOccurred('heavy');
-                break;
-            case 'success':
-                tg.HapticFeedback.notificationOccurred('success');
-                break;
-            case 'error':
-                tg.HapticFeedback.notificationOccurred('error');
-                break;
-            default:
-                tg.HapticFeedback.impactOccurred('light');
-        }
+        const styles = { light: "light", medium: "medium", heavy: "heavy", success: "success", error: "error" };
+        const method = style === "success" || style === "error" ? "notificationOccurred" : "impactOccurred";
+        if (method === "notificationOccurred") tg.HapticFeedback.notificationOccurred(style);
+        else tg.HapticFeedback.impactOccurred(styles[style] || "light");
     }
 }
 
-// ========== SHARE FUNCTION ==========
-function shareLesson(lessonNum, lessonTitle) {
-    const shareText = `📚 Programming Cub — Урок ${lessonNum}: ${lessonTitle}\n\nИзучай Python с нуля в нашем клубе! Бесплатные уроки, чат и помощь.\n\n🚀 Открыть бота: https://t.me/ProgClubBot_bot`;
+// ========== НАВИГАЦИЯ ==========
+document.querySelectorAll(".nav-tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+        const page = tab.getAttribute("data-page");
+        hapticFeedback("light");
+        document.querySelectorAll(".nav-tab").forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+        document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+        document.getElementById(`page-${page}`).classList.add("active");
+        if (page === "top") loadTopList();
+        if (page === "profile") loadProfile();
+        if (page === "lessons") loadLessons();
+        if (page === "home") loadCurrentHW();
+    });
+});
+
+// ========== ЗАГРУЗКА ТЕКУЩЕГО ДЗ ==========
+async function loadCurrentHW() {
+    const hwContent = document.getElementById("hw-content");
+    hwContent.innerHTML = "🐍 Загрузка...";
     
-    if (tg && tg.shareToStory) {
-        // Telegram Mini App native share
-        tg.shareToStory(shareText, {
-            widget_link: {
-                url: 'https://t.me/ProgClubBot_bot',
-                name: 'Programming Cub'
-            }
-        });
-        hapticFeedback('success');
-    } else if (navigator.share) {
-        // Web Share API (мобильные браузеры)
-        navigator.share({
-            title: `Урок ${lessonNum}: ${lessonTitle}`,
-            text: shareText,
-            url: 'https://t.me/ProgClubBot_bot'
-        }).then(() => hapticFeedback('success'));
+    try {
+        const response = await fetch("https://cetzy.github.io/ProgrammingCub/api/hw.json");
+        const data = await response.json();
+        hwContent.innerHTML = `
+<span class="prompt">$</span> /hw --current
+
+📚 *Домашнее задание #${data.id}*
+📌 ${data.title}
+
+————————————
+
+🎯 Уровень 1: ${data.easy}
+
+⚔️ Уровень 2: ${data.medium}
+
+💀 Уровень 3: ${data.hard}
+
+————————————
+
+📅 Дедлайн: ${data.deadline}
+🏆 Награда: +15 / +30 / +60 опыта
+        `;
+    } catch(e) {
+        hwContent.innerHTML = `
+<span class="prompt">$</span> /hw --current
+
+❌ Не удалось загрузить ДЗ.
+
+📝 Напиши /hw в боте @ProgClubBot_bot
+        `;
+    }
+}
+
+// ========== ВЫБОР УРОВНЯ ==========
+document.querySelectorAll(".level-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        document.querySelectorAll(".level-btn").forEach(b => b.classList.remove("selected"));
+        btn.classList.add("selected");
+        selectedLevel = btn.getAttribute("data-level");
+        hapticFeedback("medium");
+    });
+});
+
+// ========== ОТПРАВКА КОДА ==========
+document.getElementById("submit-code-btn")?.addEventListener("click", async () => {
+    const code = document.getElementById("code-input").value;
+    if (!selectedLevel) {
+        alert("❌ Выбери уровень сложности!");
+        hapticFeedback("error");
+        return;
+    }
+    if (!code.trim()) {
+        alert("❌ Введи код решения!");
+        hapticFeedback("error");
+        return;
+    }
+    
+    const submitBtn = document.getElementById("submit-code-btn");
+    const originalText = submitBtn.innerText;
+    submitBtn.innerText = "⏳ Отправка...";
+    submitBtn.disabled = true;
+    
+    const levelNames = { 1: "🟢 Уровень 1", 2: "🟡 Уровень 2", 3: "🔴 Уровень 3" };
+    
+    if (tg) {
+        tg.sendData(JSON.stringify({
+            action: "submit_hw",
+            level: selectedLevel,
+            level_name: levelNames[selectedLevel],
+            code: code,
+            user_id: userId,
+            user_name: userName
+        }));
+        alert(`✅ Код отправлен на проверку администратору!\n\nУровень: ${levelNames[selectedLevel]}\nОбычно проверка занимает до 24 часов.`);
+        hapticFeedback("success");
+        document.getElementById("code-input").value = "";
+        selectedLevel = null;
+        document.querySelectorAll(".level-btn").forEach(b => b.classList.remove("selected"));
     } else {
-        // Fallback: копируем в буфер
-        navigator.clipboard.writeText(shareText);
-        alert('Ссылка скопирована! Отправь её другу в Telegram 😊');
-        hapticFeedback('light');
+        alert(`❌ Отправь этот код боту @ProgClubBot_bot\n\nКоманда: /hw submit ${selectedLevel}\n\nКод:\n${code.substring(0, 200)}...`);
+        hapticFeedback("light");
     }
-}
-
-// ========== BOTTOM MENU ==========
-const bottomMenu = document.querySelector('.bottom-menu');
-let menuVisible = false;
-
-// Показываем меню при скролле вверх/вниз
-let lastScrollY = window.scrollY;
-window.addEventListener('scroll', () => {
-    const currentScrollY = window.scrollY;
-    if (currentScrollY > lastScrollY + 10) {
-        // Скролл вниз — скрываем меню
-        if (menuVisible) {
-            bottomMenu.classList.remove('visible');
-            menuVisible = false;
-        }
-    } else if (currentScrollY < lastScrollY - 10) {
-        // Скролл вверх — показываем меню
-        if (!menuVisible) {
-            bottomMenu.classList.add('visible');
-            menuVisible = true;
-            setTimeout(() => {
-                if (!menuVisible) return;
-                bottomMenu.classList.remove('visible');
-                menuVisible = false;
-            }, 2000);
-        }
-    }
-    lastScrollY = currentScrollY;
+    
+    submitBtn.innerText = originalText;
+    submitBtn.disabled = false;
 });
 
-// Нажатие на кнопки меню
-document.querySelectorAll('.menu-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const action = btn.getAttribute('data-action');
-        hapticFeedback('light');
+// ========== ЗАГРУЗКА ТАБЛИЦЫ ЛИДЕРОВ ==========
+async function loadTopList() {
+    const topContainer = document.getElementById("top-list");
+    topContainer.innerHTML = '<div class="loading">🏆 Загрузка таблицы лидеров...</div>';
+    
+    try {
+        const response = await fetch("https://cetzy.github.io/ProgrammingCub/api/top.json");
+        const users = await response.json();
         
-        switch(action) {
-            case 'chat':
-                window.open('https://t.me/programming_club_CeTzY', '_blank');
-                break;
-            case 'lessons':
-                document.querySelector('.lessons-grid')?.scrollIntoView({ behavior: 'smooth' });
-                break;
-            case 'bot':
-                window.open('https://t.me/ProgClubBot_bot', '_blank');
-                break;
-            case 'share':
-                shareLesson('все', 'Все уроки Python');
-                break;
+        if (!users || users.length === 0) {
+            topContainer.innerHTML = '<div class="loading">📭 Пока никого нет. Стань первым!</div>';
+            return;
         }
-    });
-});
-
-// Mobile menu toggle
-const mobileBtn = document.querySelector('.mobile-menu-btn');
-const navLinks = document.querySelector('.nav-links');
-
-if (mobileBtn) {
-    mobileBtn.addEventListener('click', () => {
-        if (navLinks.style.display === 'flex') {
-            navLinks.style.display = 'none';
-        } else {
-            navLinks.style.display = 'flex';
-            navLinks.style.flexDirection = 'column';
-            navLinks.style.position = 'absolute';
-            navLinks.style.top = '97px';
-            navLinks.style.left = '0';
-            navLinks.style.right = '0';
-            navLinks.style.background = 'var(--bg-dark)';
-            navLinks.style.padding = '20px';
-            navLinks.style.borderBottom = '1px solid var(--border)';
-            navLinks.style.zIndex = '100';
-        }
-    });
-}
-
-// Кликабельные quick-карточки
-const quickCards = document.querySelectorAll('.quick-card');
-quickCards.forEach(card => {
-    card.addEventListener('click', () => {
-        hapticFeedback('light');
-        const url = card.getAttribute('data-url');
-        if (url) window.open(url, '_blank');
-    });
-});
-
-// Навигация
-const navChat = document.getElementById('nav-chat');
-const navLessons = document.getElementById('nav-lessons');
-const navHome = document.getElementById('nav-home');
-
-if (navChat) {
-    navChat.addEventListener('click', (e) => {
-        e.preventDefault();
-        hapticFeedback('light');
-        window.open('https://t.me/programming_club_CeTzY', '_blank');
-    });
-}
-if (navLessons) {
-    navLessons.addEventListener('click', (e) => {
-        e.preventDefault();
-        hapticFeedback('light');
-        window.open('https://t.me/CeTzYPythonLessons', '_blank');
-    });
-}
-if (navHome) {
-    navHome.addEventListener('click', (e) => {
-        e.preventDefault();
-        hapticFeedback('light');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-}
-
-// КАРТОЧКИ УРОКОВ
-const lessonCards = document.querySelectorAll('.lesson-card');
-let currentLessonNum = null;
-
-function openLesson(lessonNum) {
-    currentLessonNum = lessonNum;
-    hapticFeedback('medium');
-    
-    const modal = document.getElementById('lesson-modal');
-    const modalBody = document.getElementById('modal-body');
-    
-    const lessonTitles = {
-        1: 'Переменные', 2: 'Вывод и ввод', 3: 'Условия',
-        4: 'Арифметика и логика', 5: 'Циклы'
-    };
-    const lessonTitle = lessonTitles[lessonNum];
-    
-    const lessonsContent = {
-        1: `...` // тут твой полный контент урока 1 (как в прошлый раз)
-    };
-    
-    if (modalBody && lessonsContent[lessonNum]) {
-        modalBody.innerHTML = lessonsContent[lessonNum];
-        modal.style.display = 'block';
-        document.body.style.overflow = 'hidden';
         
-        // Добавляем кнопку шеринга внутри урока
-        const shareInModal = modalBody.querySelector('#share-lesson-in-modal');
-        if (!shareInModal) {
-            const shareBtn = document.createElement('button');
-            shareBtn.className = 'tg-link';
-            shareBtn.style.marginTop = '16px';
-            shareBtn.style.cursor = 'pointer';
-            shareBtn.innerHTML = '<span>📤</span> Поделиться этим уроком';
-            shareBtn.onclick = () => shareLesson(lessonNum, lessonTitle);
-            modalBody.appendChild(shareBtn);
-        }
-    } else if (modalBody) {
-        modalBody.innerHTML = '<p>Урок временно недоступен. Загляни в Telegram-канал!</p>';
-        modal.style.display = 'block';
-        document.body.style.overflow = 'hidden';
+        topContainer.innerHTML = "";
+        users.forEach((user, index) => {
+            const medal = index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : `${index + 1}.`;
+            const item = document.createElement("div");
+            item.className = "top-item";
+            item.innerHTML = `
+                <div class="top-medal">${medal}</div>
+                <div class="top-name">${user.name}</div>
+                <div class="top-exp">${user.exp} опыта</div>
+                <div class="top-rank">${user.rank || "Участник"}</div>
+            `;
+            topContainer.appendChild(item);
+        });
+    } catch(e) {
+        topContainer.innerHTML = '<div class="loading">❌ Временно недоступно. Напиши /hw top в боте @ProgClubBot_bot</div>';
     }
 }
 
-// Навешиваем обработчики на карточки уроков с вибрацией
-lessonCards.forEach(card => {
-    card.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const lessonNum = card.getAttribute('data-lesson');
-        if (lessonNum) openLesson(parseInt(lessonNum));
-    });
-});
-
-// Кнопка "Поделиться уроком" в модалке
-const shareLessonBtn = document.getElementById('share-lesson-btn');
-if (shareLessonBtn) {
-    shareLessonBtn.addEventListener('click', () => {
-        if (currentLessonNum) {
-            const titles = {1:'Переменные',2:'Вывод и ввод',3:'Условия',4:'Арифметика и логика',5:'Циклы'};
-            shareLesson(currentLessonNum, titles[currentLessonNum]);
-        } else {
-            shareLesson('все', 'Все уроки Python');
-        }
-    });
-}
-
-// Закрытие модалки
-const modal = document.getElementById('lesson-modal');
-const closeBtn = document.querySelector('.close');
-
-if (closeBtn) {
-    closeBtn.onclick = function() {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-        hapticFeedback('light');
-    };
-}
-
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-        hapticFeedback('light');
+// ========== ЗАГРУЗКА ПРОФИЛЯ ==========
+async function loadProfile() {
+    if (!userId) {
+        document.getElementById("user-points").innerText = "?";
+        document.getElementById("user-hw-done").innerText = "?";
+        document.getElementById("user-level").innerText = "?";
+        document.getElementById("user-rank").innerText = "Авторизуйся в Telegram";
+        return;
     }
-};
-
-// Анимация появления
-const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
-
-document.querySelectorAll('.lesson-card, .quick-card').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(el);
-});
-
-// Консоль
-console.log('%c🚀 Programming Cub | Полная интеграция с Telegram!', 'color: #00ff88; font-size: 16px; font-family: monospace;');
-if (tg && userData) {
-    console.log('%c✅ Telegram Web App API подключён', 'color: #00ff88');
-    console.log('%c✅ Haptic Feedback готов', 'color: #00ff88');
-    console.log('%c✅ Пользователь авторизован', 'color: #00ff88');
+    
+    try {
+        const response = await fetch(`https://cetzy.github.io/ProgrammingCub/api/user.json?id=${userId}`);
+        const data = await response.json();
+        
+        document.getElementById("user-points").innerText = data.points || 0;
+        document.getElementById("user-hw-done").innerText = data.hw_done || 0;
+        document.getElementById("user-level").innerText = data.level || 1;
+        
+        const rankNames = {
+            1: "🥚 Новичок", 2: "📖 Ученик", 3: "💻 Кодер",
+            4: "🐍 Питонист", 5: "⚔️ Разработчик", 6: "🚀 Продвинутый",
+            7: "🔥 Профи", 8: "👑 Мастер", 9: "💎 Эксперт", 10: "🏆 Легенда"
+        };
+        document.getElementById("user-rank").innerText = rankNames[data.level] || "🥚 Новичок";
+        
+        const expPercent = (data.exp / data.next_exp) * 100;
+        document.getElementById("exp-fill").style.width = expPercent + "%";
+        document.getElementById("exp-text").innerText = `${data.exp} / ${data.next_exp} опыта`;
+    } catch(e) {
+        document.getElementById("user-points").innerText = "0";
+        document.getElementById("user-hw-done").innerText = "0";
+        document.getElementById("user-level").innerText = "1";
+        document.getElementById("exp-fill").style.width = "0%";
+        document.getElementById("exp-text").innerText = "0 / 50 опыта";
+    }
 }
+
+// ========== ЗАГРУЗКА СПИСКА УРОКОВ ==========
+function loadLessons() {
+    const lessonsGrid = document.getElementById("lessons-list");
+    const lessons = [
+        { num: 1, title: "Переменные", desc: "Что это вообще такое и для чего нужны. Типы данных", duration: "15 мин", level: "⭐", lang: "python" },
+        { num: 2, title: "Вывод и ввод", desc: "print() и input(). Учимся общаться с программой", duration: "12 мин", level: "⭐", lang: "python" },
+        { num: 3, title: "Условия", desc: "if, elif, else. Программа выбирает, что делать", duration: "18 мин", level: "⭐⭐", lang: "python" },
+        { num: 4, title: "Арифметика и логика", desc: "Операторы, сравнения, приоритеты", duration: "20 мин", level: "⭐⭐", lang: "python" },
+        { num: 5, title: "Циклы", desc: "while и for. Заставляем код повторяться", duration: "25 мин", level: "⭐⭐⭐", lang: "python" }
+    ];
+    
+    lessonsGrid.innerHTML = "";
+    lessons.forEach(lesson => {
+        const card = document.createElement("div");
+        card.className = "lesson-card";
+        card.onclick = () => {
+            hapticFeedback("medium");
+            if (tg) {
+                tg.sendData(JSON.stringify({ action: "open_lesson", lesson: lesson.num }));
+            }
+            window.open("https://t.me/CeTzYPythonLessons", "_blank");
+        };
+        card.innerHTML = `
+            <div class="lesson-number">0${lesson.num}</div>
+            <div class="lesson-info">
+                <h3>${lesson.title}</h3>
+                <p>${lesson.desc}</p>
+                <div class="lesson-meta">
+                    <span>📖 ${lesson.duration}</span>
+                    <span>${lesson.level}</span>
+                </div>
+            </div>
+        `;
+        lessonsGrid.appendChild(card);
+    });
+}
+
+// ========== TELEGRAM CALLBACK ==========
+if (tg) {
+    tg.onEvent("dataReceived", (data) => {
+        console.log("Данные из бота:", data);
+        try {
+            const parsed = JSON.parse(data);
+            if (parsed.type === "profile_update") {
+                loadProfile();
+            }
+        } catch(e) {}
+    });
+}
+
+// ========== ЗАГРУЗКА ПРИ СТАРТЕ ==========
+loadCurrentHW();
+loadLessons();
+
+console.log("%c🚀 Programming Cub Mini App v2.0 запущен!", "color: #00ff88; font-size: 16px; font-family: monospace;");
+console.log("%c🔥 Профиль, топ, уроки и сдача ДЗ — всё в одном приложении", "color: #00b8ff");
