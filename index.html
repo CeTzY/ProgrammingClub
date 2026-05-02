@@ -19,7 +19,15 @@
         <div class="terminal-status">online</div>
     </div>
 
-    <!-- ========== СТРАНИЦЫ ========== -->
+    <!-- НАВИГАЦИЯ СТРАНИЦ -->
+    <div class="nav-tabs">
+        <button class="nav-tab active" data-page="home">🏠 Главная</button>
+        <button class="nav-tab" data-page="lessons">📚 Уроки</button>
+        <button class="nav-tab" data-page="top">🏆 Топ</button>
+        <button class="nav-tab" data-page="profile">👤 Профиль</button>
+    </div>
+
+    <!-- ========== СТРАНИЦА 1: ГЛАВНАЯ (ДЗ + СДАЧА) ========== -->
     <div id="page-home" class="page active">
         <div class="hero-mini">
             <div class="terminal-mini">
@@ -43,14 +51,18 @@
         </div>
     </div>
 
+    <!-- ========== СТРАНИЦА 2: УРОКИ ========== -->
     <div id="page-lessons" class="page">
         <div class="section-header">
             <h2>📚 Все уроки Python</h2>
             <a href="https://t.me/CeTzYPythonLessons" class="see-all" target="_blank">Все уроки в Telegram →</a>
         </div>
-        <div class="lessons-grid" id="lessons-list"></div>
+        <div class="lessons-grid" id="lessons-list">
+            <!-- Список уроков будет загружен из JS -->
+        </div>
     </div>
 
+    <!-- ========== СТРАНИЦА 3: ТОП УЧЕНИКОВ ========== -->
     <div id="page-top" class="page">
         <div class="section-header">
             <h2>🏆 Таблица лидеров</h2>
@@ -59,45 +71,55 @@
         <div id="top-list" class="top-list">
             <div class="loading">Загрузка таблицы лидеров...</div>
         </div>
+        <div class="info-note" style="margin-top: 16px; text-align: center;">
+            📊 Очки начисляются за сданные ДЗ. Чем выше уровень — тем больше опыта!
+        </div>
     </div>
 
+    <!-- ========== СТРАНИЦА 4: ПРОФИЛЬ ========== -->
     <div id="page-profile" class="page">
         <div class="profile-card">
-            <div class="avatar">👤</div>
+            <div class="avatar" id="user-avatar">👤</div>
             <h2 id="user-name">Загрузка...</h2>
             <div class="rank-badge" id="user-rank">🥚 Новичок</div>
+            
             <div class="exp-bar-container">
-                <div class="exp-bar"><div class="exp-fill" id="exp-fill" style="width: 0%"></div></div>
+                <div class="exp-bar">
+                    <div class="exp-fill" id="exp-fill" style="width: 0%"></div>
+                </div>
                 <div class="exp-text" id="exp-text">0 / 0 опыта</div>
             </div>
+            
             <div class="stats-grid-mini">
                 <div class="stat-mini">🏆 Очки<br><span id="user-points">0</span></div>
                 <div class="stat-mini">📚 Сдано ДЗ<br><span id="user-hw-done">0</span></div>
                 <div class="stat-mini">⭐ Уровень<br><span id="user-level">1</span></div>
             </div>
         </div>
-    </div>
-
-    <!-- НИЖНИЙ ХОТБАР -->
-    <div class="bottom-nav">
-        <button class="bottom-nav-btn active" data-page="home">🏠<br><span>Главная</span></button>
-        <button class="bottom-nav-btn" data-page="lessons">📚<br><span>Уроки</span></button>
-        <button class="bottom-nav-btn" data-page="top">🏆<br><span>Топ</span></button>
-        <button class="bottom-nav-btn" data-page="profile">👤<br><span>Профиль</span></button>
+        
+        <div class="help-card" style="margin-top: 20px;">
+            <div class="help-icon">❓</div>
+            <div class="help-content">
+                <h3>Как получить больше опыта?</h3>
+                <p>✔ Сдавай ДЗ повышенной сложности<br>✔ Выполняй задания в срок<br>✔ Активно участвуй в жизни клуба</p>
+            </div>
+        </div>
     </div>
 
     <footer>
         <div class="footer-content">
-            <div class="logo"><span class="bracket">⟨</span>Programming Cub<span class="bracket">⟩</span></div>
-            <p class="tagline">// где код становится искусством</p>
-            <div class="social-links">
-                <a href="https://t.me/programming_club_CeTzY">💬 Чат клуба</a>
-                <a href="https://t.me/CeTzYPythonLessons">🐍 Python уроки</a>
-                <a href="https://t.me/ProgClubBot_bot">🤖 CodeRunner Bot</a>
+            <div class="footer-section">
+                <div class="logo"><span class="bracket">⟨</span>Programming Cub<span class="bracket">⟩</span></div>
+                <p class="tagline">// где код становится искусством</p>
+                <div class="social-links">
+                    <a href="https://t.me/programming_club_CeTzY">💬 Чат клуба</a>
+                    <a href="https://t.me/CeTzYPythonLessons">🐍 Python уроки</a>
+                    <a href="https://t.me/ProgClubBot_bot">🤖 CodeRunner Bot</a>
+                </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2026 Programming Cub | created by CeTzY</p>
+            <p>© 2026 Programming Cub | created by CeTzY | учим код без боли ❤️</p>
         </div>
     </footer>
 
