@@ -8,6 +8,7 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
+    <!-- Консольная строка -->
     <div class="top-bar">
         <div class="terminal-dots">
             <span class="dot red"></span>
@@ -26,70 +27,100 @@
         <button class="nav-tab" data-page="profile">👤 Профиль</button>
     </div>
 
-    <!-- СТРАНИЦА 1: ГЛАВНАЯ (ДЗ) -->
+    <!-- ========== СТРАНИЦА 1: ГЛАВНАЯ (ДЗ + СДАЧА) ========== -->
     <div id="page-home" class="page active">
         <div class="hero-mini">
             <div class="terminal-mini">
                 <div class="terminal-header">$ python --version</div>
                 <div class="terminal-body-mini" id="hw-content">
-                    Загрузка...
+                    🐍 Загрузка домашнего задания...
                 </div>
             </div>
         </div>
+        
         <div class="submit-section">
-            <h3>📤 Сдать ДЗ</h3>
+            <h3>📤 Сдать домашнее задание</h3>
             <div class="level-buttons">
-                <button class="level-btn" data-level="1">🟢 Уровень 1</button>
-                <button class="level-btn" data-level="2">🟡 Уровень 2</button>
-                <button class="level-btn" data-level="3">🔴 Уровень 3</button>
+                <button class="level-btn" data-level="1">🟢 Уровень 1 (новичок)</button>
+                <button class="level-btn" data-level="2">🟡 Уровень 2 (средний)</button>
+                <button class="level-btn" data-level="3">🔴 Уровень 3 (профи)</button>
             </div>
-            <textarea id="code-input" placeholder="Вставь сюда свой код..." rows="6"></textarea>
+            <textarea id="code-input" placeholder='Вставь сюда свой код на Python, JavaScript, C++... Например:&#10;&#10;print("Hello, Programming Cub!")' rows="8"></textarea>
             <button id="submit-code-btn" class="submit-btn">🚀 Отправить на проверку</button>
+            <p class="info-note">✅ После отправки код уйдёт администратору на проверку. Обычно занимает до 24 часов.</p>
         </div>
     </div>
 
-    <!-- СТРАНИЦА 2: УРОКИ -->
+    <!-- ========== СТРАНИЦА 2: УРОКИ ========== -->
     <div id="page-lessons" class="page">
         <div class="section-header">
             <h2>📚 Все уроки Python</h2>
+            <a href="https://t.me/CeTzYPythonLessons" class="see-all" target="_blank">Все уроки в Telegram →</a>
         </div>
         <div class="lessons-grid" id="lessons-list">
             <!-- Список уроков будет загружен из JS -->
         </div>
     </div>
 
-    <!-- СТРАНИЦА 3: ТОП УЧЕНИКОВ -->
+    <!-- ========== СТРАНИЦА 3: ТОП УЧЕНИКОВ ========== -->
     <div id="page-top" class="page">
         <div class="section-header">
             <h2>🏆 Таблица лидеров</h2>
+            <span class="see-all">по опыту</span>
         </div>
         <div id="top-list" class="top-list">
-            Загрузка...
+            <div class="loading">Загрузка таблицы лидеров...</div>
+        </div>
+        <div class="info-note" style="margin-top: 16px; text-align: center;">
+            📊 Очки начисляются за сданные ДЗ. Чем выше уровень — тем больше опыта!
         </div>
     </div>
 
-    <!-- СТРАНИЦА 4: ПРОФИЛЬ -->
+    <!-- ========== СТРАНИЦА 4: ПРОФИЛЬ ========== -->
     <div id="page-profile" class="page">
         <div class="profile-card">
             <div class="avatar" id="user-avatar">👤</div>
             <h2 id="user-name">Загрузка...</h2>
             <div class="rank-badge" id="user-rank">🥚 Новичок</div>
+            
             <div class="exp-bar-container">
                 <div class="exp-bar">
                     <div class="exp-fill" id="exp-fill" style="width: 0%"></div>
                 </div>
                 <div class="exp-text" id="exp-text">0 / 0 опыта</div>
             </div>
+            
             <div class="stats-grid-mini">
-                <div class="stat-mini">🏆 <span id="user-points">0</span> очков</div>
-                <div class="stat-mini">📚 <span id="user-hw-done">0</span> ДЗ сдано</div>
-                <div class="stat-mini">⭐ <span id="user-level">1</span> уровень</div>
+                <div class="stat-mini">🏆 Очки<br><span id="user-points">0</span></div>
+                <div class="stat-mini">📚 Сдано ДЗ<br><span id="user-hw-done">0</span></div>
+                <div class="stat-mini">⭐ Уровень<br><span id="user-level">1</span></div>
+            </div>
+        </div>
+        
+        <div class="help-card" style="margin-top: 20px;">
+            <div class="help-icon">❓</div>
+            <div class="help-content">
+                <h3>Как получить больше опыта?</h3>
+                <p>✔ Сдавай ДЗ повышенной сложности<br>✔ Выполняй задания в срок<br>✔ Активно участвуй в жизни клуба</p>
             </div>
         </div>
     </div>
 
     <footer>
-        <p>© 2026 Programming Cub | created by CeTzY</p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="logo"><span class="bracket">⟨</span>Programming Cub<span class="bracket">⟩</span></div>
+                <p class="tagline">// где код становится искусством</p>
+                <div class="social-links">
+                    <a href="https://t.me/programming_club_CeTzY">💬 Чат клуба</a>
+                    <a href="https://t.me/CeTzYPythonLessons">🐍 Python уроки</a>
+                    <a href="https://t.me/ProgClubBot_bot">🤖 CodeRunner Bot</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Programming Cub | created by CeTzY | учим код без боли ❤️</p>
+        </div>
     </footer>
 
     <script src="script.js"></script>
