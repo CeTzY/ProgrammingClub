@@ -1,3 +1,4 @@
+// ========== TELEGRAM WEB APP ==========
 let tg = window.Telegram?.WebApp;
 let userId = null;
 let userName = null;
@@ -13,7 +14,7 @@ if (tg) {
     }
 }
 
-// Навигация
+// ========== НАВИГАЦИЯ ==========
 document.querySelectorAll(".nav-btn").forEach(btn => {
     btn.addEventListener("click", () => {
         const page = btn.dataset.page;
@@ -21,6 +22,7 @@ document.querySelectorAll(".nav-btn").forEach(btn => {
         btn.classList.add("active");
         document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
         document.getElementById(`page-${page}`).classList.add("active");
+        
         if (page === "top") renderTop();
         if (page === "profile") renderProfile();
         if (page === "homework") renderHomework();
@@ -32,6 +34,7 @@ document.querySelectorAll(".nav-btn").forEach(btn => {
 function renderNews() {
     const container = document.getElementById("news-list");
     if (!container) return;
+    
     let html = "";
     for (let n of NEWS) {
         html += `
@@ -45,11 +48,18 @@ function renderNews() {
     container.innerHTML = html;
 }
 
-// ========== ДЗ (ТОЛЬКО ДЛЯ ЧТЕНИЯ) ==========
+// ========== ДОМАШНЕЕ ЗАДАНИЕ (ТОЛЬКО ДЛЯ ЧТЕНИЯ) ==========
 function renderHomework() {
     const container = document.getElementById("homework-content");
     if (!container) return;
-    let html = `<div class="hw-header"><h2>📚 Домашнее задание #${HOMEWORK.id}</h2><div class="hw-deadline">📅 Дедлайн: ${HOMEWORK.deadline}</div></div>`;
+    
+    let html = `
+        <div class="hw-header">
+            <h2>📚 Домашнее задание #${HOMEWORK.id}</h2>
+            <div class="hw-deadline">📅 Дедлайн: ${HOMEWORK.deadline}</div>
+        </div>
+    `;
+    
     for (let lvl of HOMEWORK.levels) {
         const levelClass = lvl.level === 1 ? "easy" : lvl.level === 2 ? "medium" : "hard";
         html += `
@@ -57,25 +67,52 @@ function renderHomework() {
                 <div class="hw-level ${levelClass}">${lvl.name}</div>
                 <div class="hw-title">${lvl.title}</div>
                 <div class="hw-description">${lvl.description}</div>
-                <div class="hw-section"><div class="hw-section-title">📌 Пример</div><div class="hw-example">${lvl.example}</div></div>
+                <div class="hw-section">
+                    <div class="hw-section-title">📌 Пример</div>
+                    <div class="hw-example">${lvl.example}</div>
+                </div>
             </div>
         `;
     }
+    
     html += `<div class="info-box">⚡ Сдать задание можно в боте: @ProgClubBot_bot</div>`;
     container.innerHTML = html;
 }
 
-// ========== ТОП ==========
-function renderTop() {
+// ========== ТАБЛИЦА ЛИДЕРОВ (С ГИТХАБА) ==========
+async function renderTop() {
     const container = document.getElementById("top-list");
     if (!container) return;
-    let html = "";
-    for (let i = 0; i < TOP_USERS.length; i++) {
-        const u = TOP_USERS[i];
-        const medal = i === 0 ? "🥇" : i === 1 ? "🥈" : `${i+1}.`;
-        html += `<div class="top-item"><div class="top-medal">${medal}</div><div class="top-name">${u.name}</div><div class="top-exp">${u.exp} опыта</div><div class="top-rank">${u.rank}</div></div>`;
+    
+    container.innerHTML = '<div class="loading">🏆 Загрузка таблицы лидеров...</div>';
+    
+    try {
+        const response = await fetch("https://cetzy.github.io/ProgrammingCub/api/top.json");
+        const topData = await response.json();
+        
+        if (!topData || topData.length === 0) {
+            container.innerHTML = '<div class="loading">📭 Пока никого нет. Стань первым!</div>';
+            return;
+        }
+        
+        let html = "";
+        for (let i = 0; i < topData.length; i++) {
+            const u = topData[i];
+            const medal = i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `${i+1}.`;
+            html += `
+                <div class="top-item">
+                    <div class="top-medal">${medal}</div>
+                    <div class="top-name">${u.name}</div>
+                    <div class="top-exp">${u.exp} опыта</div>
+                    <div class="top-rank">${u.rank}</div>
+                </div>
+            `;
+        }
+        container.innerHTML = html;
+    } catch(e) {
+        console.error("Ошибка загрузки топа:", e);
+        container.innerHTML = '<div class="loading">❌ Ошибка загрузки. Напиши /hw top в боте</div>';
     }
-    container.innerHTML = html;
 }
 
 // ========== ПРОФИЛЬ ==========
@@ -85,17 +122,27 @@ function renderProfile() {
         userName = user?.first_name || "Участник";
         document.getElementById("user-name").innerText = userName;
     }
-    const exp = 150, nextExp = 300, percent = (exp / nextExp) * 100;
+    
+    // Данные профиля (временно заглушка, потом можно подтягивать с GitHub)
+    const exp = 150;
+    const nextExp = 300;
+    const percent = (exp / nextExp) * 100;
+    
     const expFill = document.getElementById("exp-fill");
     if (expFill) expFill.style.width = percent + "%";
+    
     const expText = document.getElementById("exp-text");
     if (expText) expText.innerText = `${exp} / ${nextExp} опыта`;
+    
     const pointsSpan = document.getElementById("user-points");
     if (pointsSpan) pointsSpan.innerText = "25";
+    
     const hwDoneSpan = document.getElementById("user-hw-done");
     if (hwDoneSpan) hwDoneSpan.innerText = "3";
+    
     const levelSpan = document.getElementById("user-level");
     if (levelSpan) levelSpan.innerText = "3";
+    
     const rankSpan = document.getElementById("user-rank");
     if (rankSpan) rankSpan.innerText = "🐍 Питонист";
 }
