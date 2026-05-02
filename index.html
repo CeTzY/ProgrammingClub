@@ -3,40 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Programming Cub | // уроки Python</title>
+    <title>Programming Cub | // код и сообщество</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <!-- Консольная строка сверху -->
+    <!-- Консольная строка -->
     <div class="top-bar">
         <div class="terminal-dots">
             <span class="dot red"></span>
             <span class="dot yellow"></span>
             <span class="dot green"></span>
         </div>
-        <div class="terminal-path">~/ProgrammingCub/lessons</div>
+        <div class="terminal-path">~/ProgrammingCub</div>
         <div class="terminal-status">online</div>
     </div>
 
-    <!-- Навигация -->
-    <nav>
-        <div class="nav-container">
-            <div class="logo">
-                <span class="bracket">⟨</span>
-                Programming Cub
-                <span class="bracket">⟩</span>
-            </div>
-            <div class="nav-links">
-                <a href="#" id="nav-home">$ cd home</a>
-                <a href="#" id="nav-lessons">$ cd lessons</a>
-                <a href="#" id="nav-chat">$ join chat</a>
-            </div>
-            <div class="mobile-menu-btn">☰</div>
-        </div>
-    </nav>
-
-    <!-- НАВИГАЦИЯ СТРАНИЦ MINI APP -->
+    <!-- НАВИГАЦИЯ СТРАНИЦ -->
     <div class="nav-tabs">
         <button class="nav-tab active" data-page="home">🏠 Главная</button>
         <button class="nav-tab" data-page="lessons">📚 Уроки</button>
@@ -44,80 +27,27 @@
         <button class="nav-tab" data-page="profile">👤 Профиль</button>
     </div>
 
-    <!-- ========== СТРАНИЦА 1: ГЛАВНАЯ ========== -->
+    <!-- ========== СТРАНИЦА 1: ГЛАВНАЯ (ДЗ + СДАЧА) ========== -->
     <div id="page-home" class="page active">
-        <!-- Герой с терминалом -->
-        <header class="hero">
-            <div class="hero-content">
-                <div class="terminal-window">
-                    <div class="terminal-header">
-                        <span>python-teacher@club:~$</span>
-                    </div>
-                    <div class="terminal-body">
-                        <p><span class="prompt">$</span> python --version</p>
-                        <p class="output">Python 3.14.4 | Программирование с нуля</p>
-                        <p><span class="prompt">$</span> whoami</p>
-                        <p class="output" id="user-greeting">> Я — CeTzY, создатель Programming Cub. Учу писать код без боли.</p>
-                        <div class="code-block">
-                            <pre><code><span class="code-keyword">print</span>(<span class="code-string">"Добро пожаловать в клуб!"</span>)
-<span class="code-keyword">while</span> <span class="code-variable">alive</span>:
-    learn()
-    code()
-    grow()</code></pre>
-                        </div>
-                    </div>
+        <div class="hero-mini">
+            <div class="terminal-mini">
+                <div class="terminal-header">$ python --version</div>
+                <div class="terminal-body-mini" id="hw-content">
+                    🐍 Загрузка домашнего задания...
                 </div>
-            </div>
-        </header>
-
-        <!-- Быстрый доступ -->
-        <div class="quick-access">
-            <div class="quick-card" data-url="https://t.me/programming_club_CeTzY">
-                <div class="quick-icon">💬</div>
-                <h3>Чат клуба</h3>
-                <p>Общение, помощь, обсуждение</p>
-                <span class="quick-link">@programming_club_CeTzY →</span>
-            </div>
-            <div class="quick-card" data-url="https://t.me/CeTzYPythonLessons">
-                <div class="quick-icon">🐍</div>
-                <h3>Telegram-канал</h3>
-                <p>Все уроки там тоже есть</p>
-                <span class="quick-link">@CeTzYPythonLessons →</span>
-            </div>
-            <div class="quick-card" data-url="https://t.me/ProgClubBot_bot">
-                <div class="quick-icon">🤖</div>
-                <h3>CodeRunner Bot</h3>
-                <p>Проверяй код, решай задачи</p>
-                <span class="quick-link">@ProgClubBot_bot →</span>
-            </div>
-        </div>
-
-        <!-- Текущее ДЗ -->
-        <div class="section-header">
-            <h2>// current homework</h2>
-            <button class="see-all" id="refresh-hw" style="background:none; border:none; cursor:pointer;">🔄 обновить</button>
-        </div>
-        <div class="terminal-mini">
-            <div class="terminal-header">$ cat homework.md</div>
-            <div class="terminal-body-mini" id="hw-content">
-                <span class="prompt">$</span> loading...
             </div>
         </div>
         
-        <!-- Форма сдачи ДЗ -->
         <div class="submit-section">
             <h3>📤 Сдать домашнее задание</h3>
             <div class="level-buttons">
-                <button class="level-btn" data-level="1">🟢 Уровень 1</button>
-                <button class="level-btn" data-level="2">🟡 Уровень 2</button>
-                <button class="level-btn" data-level="3">🔴 Уровень 3</button>
+                <button class="level-btn" data-level="1">🟢 Уровень 1 (новичок)</button>
+                <button class="level-btn" data-level="2">🟡 Уровень 2 (средний)</button>
+                <button class="level-btn" data-level="3">🔴 Уровень 3 (профи)</button>
             </div>
-            <textarea id="code-input" placeholder='Вставь сюда свой код...
-
-Пример:
-print("Hello, Programming Cub!")' rows="8"></textarea>
+            <textarea id="code-input" placeholder='Вставь сюда свой код на Python, JavaScript, C++... Например:&#10;&#10;print("Hello, Programming Cub!")' rows="8"></textarea>
             <button id="submit-code-btn" class="submit-btn">🚀 Отправить на проверку</button>
-            <p class="info-note">✅ Код уйдёт администратору. Проверка до 24 часов.</p>
+            <p class="info-note">✅ После отправки код уйдёт администратору на проверку. Обычно занимает до 24 часов.</p>
         </div>
     </div>
 
@@ -125,21 +55,25 @@ print("Hello, Programming Cub!")' rows="8"></textarea>
     <div id="page-lessons" class="page">
         <div class="section-header">
             <h2>📚 Все уроки Python</h2>
-            <a href="https://t.me/CeTzYPythonLessons" class="see-all" target="_blank">Telegram-канал →</a>
+            <a href="https://t.me/CeTzYPythonLessons" class="see-all" target="_blank">Все уроки в Telegram →</a>
         </div>
-        <div class="lessons-grid" id="lessons-list"></div>
+        <div class="lessons-grid" id="lessons-list">
+            <!-- Список уроков будет загружен из JS -->
+        </div>
     </div>
 
-    <!-- ========== СТРАНИЦА 3: ТОП ========== -->
+    <!-- ========== СТРАНИЦА 3: ТОП УЧЕНИКОВ ========== -->
     <div id="page-top" class="page">
         <div class="section-header">
             <h2>🏆 Таблица лидеров</h2>
             <span class="see-all">по опыту</span>
         </div>
         <div id="top-list" class="top-list">
-            <div class="loading">Загрузка...</div>
+            <div class="loading">Загрузка таблицы лидеров...</div>
         </div>
-        <div class="info-note">📊 Полный топ в боте: /hw_top</div>
+        <div class="info-note" style="margin-top: 16px; text-align: center;">
+            📊 Очки начисляются за сданные ДЗ. Чем выше уровень — тем больше опыта!
+        </div>
     </div>
 
     <!-- ========== СТРАНИЦА 4: ПРОФИЛЬ ========== -->
@@ -148,35 +82,26 @@ print("Hello, Programming Cub!")' rows="8"></textarea>
             <div class="avatar" id="user-avatar">👤</div>
             <h2 id="user-name">Загрузка...</h2>
             <div class="rank-badge" id="user-rank">🥚 Новичок</div>
+            
             <div class="exp-bar-container">
-                <div class="exp-bar"><div class="exp-fill" id="exp-fill" style="width:0%"></div></div>
+                <div class="exp-bar">
+                    <div class="exp-fill" id="exp-fill" style="width: 0%"></div>
+                </div>
                 <div class="exp-text" id="exp-text">0 / 0 опыта</div>
             </div>
+            
             <div class="stats-grid-mini">
                 <div class="stat-mini">🏆 Очки<br><span id="user-points">0</span></div>
                 <div class="stat-mini">📚 Сдано ДЗ<br><span id="user-hw-done">0</span></div>
                 <div class="stat-mini">⭐ Уровень<br><span id="user-level">1</span></div>
             </div>
         </div>
-        <div class="help-card">
+        
+        <div class="help-card" style="margin-top: 20px;">
             <div class="help-icon">❓</div>
             <div class="help-content">
-                <h3>Как получить опыт?</h3>
-                <p>✔ Сдавай ДЗ<br>✔ Выполняй в срок<br>✔ Участвуй в жизни клуба</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Telegram Card -->
-    <div class="telegram-card" style="margin: 20px;">
-        <div class="telegram-icon">📱</div>
-        <div class="telegram-content">
-            <h3>Присоединяйся к экосистеме</h3>
-            <p>Telegram-каналы, чаты и бот — всё в одном месте</p>
-            <div class="telegram-links">
-                <a href="https://t.me/programming_club_CeTzY" class="tg-link" target="_blank"><span>💬</span> Чат клуба</a>
-                <a href="https://t.me/CeTzYPythonLessons" class="tg-link" target="_blank"><span>🐍</span> Python уроки</a>
-                <a href="https://t.me/ProgClubBot_bot" class="tg-link" target="_blank"><span>🤖</span> CodeRunner Bot</a>
+                <h3>Как получить больше опыта?</h3>
+                <p>✔ Сдавай ДЗ повышенной сложности<br>✔ Выполняй задания в срок<br>✔ Активно участвуй в жизни клуба</p>
             </div>
         </div>
     </div>
@@ -187,25 +112,10 @@ print("Hello, Programming Cub!")' rows="8"></textarea>
                 <div class="logo"><span class="bracket">⟨</span>Programming Cub<span class="bracket">⟩</span></div>
                 <p class="tagline">// где код становится искусством</p>
                 <div class="social-links">
-                    <a href="https://t.me/programming_club_CeTzY">Telegram</a>
-                    <a href="https://t.me/CeTzYPythonLessons">Python Lessons</a>
-                    <a href="https://t.me/ProgClubBot_bot">CodeRunner Bot</a>
+                    <a href="https://t.me/programming_club_CeTzY">💬 Чат клуба</a>
+                    <a href="https://t.me/CeTzYPythonLessons">🐍 Python уроки</a>
+                    <a href="https://t.me/ProgClubBot_bot">🤖 CodeRunner Bot</a>
                 </div>
-            </div>
-            <div class="footer-section">
-                <h4>lessons</h4>
-                <a href="#" data-lesson="1">Урок 1: Переменные</a>
-                <a href="#" data-lesson="2">Урок 2: Ввод/Вывод</a>
-                <a href="#" data-lesson="3">Урок 3: Условия</a>
-                <a href="#" data-lesson="4">Урок 4: Операторы</a>
-                <a href="#" data-lesson="5">Урок 5: Циклы</a>
-            </div>
-            <div class="footer-section">
-                <h4>resources</h4>
-                <a href="https://t.me/programming_club_CeTzY">💬 Чат клуба</a>
-                <a href="https://t.me/CeTzYPythonLessons">🐍 Telegram-канал</a>
-                <a href="https://t.me/ProgClubBot_bot">🤖 CodeRunner Bot</a>
-                <a href="https://t.me/CeTzyyy">✏️ Автор: @CeTzyyy</a>
             </div>
         </div>
         <div class="footer-bottom">
