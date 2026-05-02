@@ -3,13 +3,12 @@
     --bg-card: #13131a;
     --bg-terminal: #0c0c12;
     --primary: #00ff88;
-    --primary-glow: rgba(0, 255, 136, 0.1);
     --secondary: #00b8ff;
+    --warning: #ffbb33;
+    --error: #ff4444;
     --text: #e4e4e7;
     --text-muted: #71717a;
     --border: #27272a;
-    --error: #ff4444;
-    --warning: #ffbb33;
 }
 
 * {
@@ -19,15 +18,14 @@
 }
 
 body {
-    font-family: 'Fira Code', 'Courier New', 'SF Mono', monospace;
+    font-family: 'Fira Code', 'Courier New', monospace;
     background: var(--bg-dark);
     color: var(--text);
     line-height: 1.6;
-    overflow-x: hidden;
-    padding-bottom: 70px;
+    padding-bottom: 80px;
 }
 
-/* Верхняя консольная строка */
+/* Верхняя панель */
 .top-bar {
     background: var(--bg-terminal);
     padding: 8px 20px;
@@ -36,7 +34,6 @@ body {
     align-items: center;
     border-bottom: 1px solid var(--border);
     font-size: 12px;
-    font-family: monospace;
     position: sticky;
     top: 0;
     z-index: 101;
@@ -52,7 +49,6 @@ body {
     height: 12px;
     border-radius: 50%;
 }
-
 .dot.red { background: #ff5f56; }
 .dot.yellow { background: #ffbd2e; }
 .dot.green { background: #27c93f; }
@@ -60,612 +56,76 @@ body {
 .terminal-path {
     color: var(--primary);
 }
-
 .terminal-status {
     color: var(--primary);
     animation: pulse 2s infinite;
 }
-
-/* НАВИГАЦИЯ СТРАНИЦ — ПРЯМО ПОД ТОП-БАРОМ */
-.nav-tabs {
-    display: flex;
-    background: var(--bg-card);
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 33px;
-    z-index: 100;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-.nav-tab {
-    flex: 1;
-    padding: 12px 8px;
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    font-family: monospace;
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-align: center;
-}
-
-.nav-tab:hover {
-    color: var(--primary);
-    background: rgba(0, 255, 136, 0.05);
-}
-
-.nav-tab.active {
-    color: var(--primary);
-    border-bottom: 2px solid var(--primary);
-}
-
-/* СТРАНИЦЫ */
-.page {
-    display: none;
-    padding: 20px;
-    animation: fadeIn 0.3s;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.page.active {
-    display: block;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
 @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.5; }
 }
 
-/* МИНИ-ТЕРМИНАЛ */
-.hero-mini {
-    margin-bottom: 24px;
-}
-
-.terminal-mini {
-    background: var(--bg-terminal);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-}
-
-.terminal-header {
-    background: #1a1a24;
-    padding: 8px 12px;
-    font-size: 12px;
-    color: var(--text-muted);
-    font-family: monospace;
-    border-bottom: 1px solid var(--border);
-}
-
-.terminal-body-mini {
-    padding: 16px;
-    font-size: 13px;
-    color: var(--text);
-    line-height: 1.6;
-    font-family: monospace;
-    white-space: pre-wrap;
-}
-
-.prompt {
-    color: var(--primary);
-    font-weight: bold;
-}
-
-/* ФОРМА СДАЧИ ДЗ */
-.submit-section {
-    margin-top: 24px;
+/* Нижний хотбар */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
     background: var(--bg-card);
-    border-radius: 16px;
-    padding: 20px;
-    border: 1px solid var(--border);
-}
-
-.submit-section h3 {
-    margin-bottom: 16px;
-    color: var(--primary);
-    font-size: 18px;
-}
-
-.level-buttons {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-}
-
-.level-btn {
-    flex: 1;
-    min-width: 100px;
-    padding: 10px 16px;
-    background: var(--bg-dark);
-    border: 1px solid var(--border);
-    border-radius: 30px;
-    color: var(--text);
-    font-family: monospace;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.level-btn:hover {
-    border-color: var(--primary);
-    color: var(--primary);
-}
-
-.level-btn.selected {
-    border-color: var(--primary);
-    color: var(--primary);
-    background: rgba(0, 255, 136, 0.1);
-}
-
-#code-input {
-    width: 100%;
-    background: var(--bg-dark);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px;
-    color: var(--text);
-    font-family: 'Fira Code', monospace;
-    font-size: 13px;
-    resize: vertical;
-    line-height: 1.5;
-}
-
-#code-input:focus {
-    outline: none;
-    border-color: var(--primary);
-}
-
-.submit-btn {
-    width: 100%;
-    margin-top: 16px;
-    padding: 14px;
-    background: var(--primary);
-    color: var(--bg-dark);
-    border: none;
-    border-radius: 30px;
-    font-weight: bold;
-    font-family: monospace;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.submit-btn:hover {
-    transform: scale(1.02);
-    box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
-}
-
-.info-note {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 12px;
-    text-align: center;
-}
-
-/* СЕКЦИИ */
-.section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    gap: 12px;
-}
-
-.section-header h2 {
-    font-size: 20px;
-    color: var(--primary);
-    font-family: monospace;
-}
-
-.see-all {
-    text-decoration: none;
-    color: var(--text-muted);
-    font-size: 12px;
-    transition: color 0.3s;
-}
-
-.see-all:hover {
-    color: var(--primary);
-}
-
-/* СЕТКА УРОКОВ */
-.lessons-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.lesson-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-    display: flex;
-    gap: 16px;
-    transition: all 0.3s;
-    cursor: pointer;
-}
-
-.lesson-card:hover {
-    transform: translateX(5px);
-    border-color: var(--primary);
-    box-shadow: 0 4px 20px rgba(0, 255, 136, 0.1);
-}
-
-.lesson-number {
-    font-size: 28px;
-    font-weight: bold;
-    color: var(--primary);
-    font-family: monospace;
-    min-width: 50px;
-    text-align: center;
-}
-
-.lesson-info {
-    flex: 1;
-}
-
-.lesson-info h3 {
-    font-size: 16px;
-    margin-bottom: 6px;
-}
-
-.lesson-info p {
-    color: var(--text-muted);
-    font-size: 12px;
-    margin-bottom: 8px;
-}
-
-.lesson-meta {
-    display: flex;
-    gap: 12px;
-    font-size: 11px;
-    color: var(--text-muted);
-}
-
-/* ТОП ЛИСТ */
-.top-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.top-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    background: var(--bg-card);
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    transition: transform 0.2s;
-}
-
-.top-item:hover {
-    transform: translateX(5px);
-    border-color: var(--primary);
-}
-
-.top-medal {
-    font-size: 24px;
-    width: 40px;
-    text-align: center;
-}
-
-.top-name {
-    flex: 1;
-    font-weight: 500;
-    font-size: 14px;
-}
-
-.top-exp {
-    color: var(--primary);
-    font-weight: bold;
-    font-size: 13px;
-}
-
-.top-rank {
-    font-size: 11px;
-    color: var(--text-muted);
-    background: rgba(0, 255, 136, 0.1);
-    padding: 4px 10px;
-    border-radius: 20px;
-}
-
-.loading {
-    text-align: center;
-    color: var(--text-muted);
-    padding: 40px;
-}
-
-/* ПРОФИЛЬ */
-.profile-card {
-    background: var(--bg-card);
-    border-radius: 20px;
-    padding: 28px;
-    text-align: center;
-    border: 1px solid var(--border);
-}
-
-.avatar {
-    font-size: 72px;
-    margin-bottom: 12px;
-}
-
-#user-name {
-    font-size: 22px;
-    margin-bottom: 8px;
-}
-
-.rank-badge {
-    display: inline-block;
-    padding: 6px 20px;
-    background: rgba(0, 255, 136, 0.1);
-    border-radius: 30px;
-    color: var(--primary);
-    font-size: 14px;
-    font-weight: 500;
-    margin: 12px 0;
-}
-
-.exp-bar-container {
-    margin: 20px 0;
-}
-
-.exp-bar {
-    background: var(--bg-dark);
-    border-radius: 10px;
-    height: 12px;
-    overflow: hidden;
-}
-
-.exp-fill {
-    background: linear-gradient(90deg, var(--primary), #00ffaa);
-    height: 100%;
-    width: 0%;
-    transition: width 0.5s ease;
-}
-
-.exp-text {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 8px;
-}
-
-.stats-grid-mini {
+    border-top: 1px solid var(--border);
     display: flex;
     justify-content: space-around;
-    margin-top: 24px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
+    padding: 8px 16px 12px;
+    z-index: 100;
 }
-
-.stat-mini {
-    text-align: center;
-    font-size: 13px;
+.bottom-nav-btn {
+    background: none;
+    border: none;
     color: var(--text-muted);
-}
-
-.stat-mini span {
-    display: block;
-    font-size: 24px;
-    font-weight: bold;
-    color: var(--primary);
-    margin-top: 6px;
-}
-
-/* КАРТОЧКА ПОМОЩИ */
-.help-card {
-    background: linear-gradient(135deg, #2a1a3a 0%, #0a0a0f 100%);
-    border: 1px solid var(--secondary);
-    border-radius: 16px;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-}
-
-.help-icon {
-    font-size: 36px;
-}
-
-.help-content h3 {
-    font-size: 16px;
-    margin-bottom: 6px;
-    color: var(--secondary);
-}
-
-.help-content p {
-    color: var(--text-muted);
+    font-family: monospace;
     font-size: 12px;
-    line-height: 1.5;
-}
-
-/* ФУТЕР */
-footer {
-    background: var(--bg-terminal);
-    border-top: 1px solid var(--border);
-    margin-top: 40px;
-    padding: 30px 20px 20px;
-}
-
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
     text-align: center;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all 0.2s;
 }
-
-.logo {
-    font-weight: 700;
-    font-size: 16px;
-    margin-bottom: 8px;
-}
-
-.bracket {
-    color: var(--primary);
-}
-
-.tagline {
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-bottom: 16px;
-}
-
-.social-links {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 16px;
-}
-
-.social-links a {
-    color: var(--text-muted);
-    text-decoration: none;
-    font-size: 12px;
-    transition: color 0.3s;
-}
-
-.social-links a:hover {
-    color: var(--primary);
-}
-
-.footer-bottom {
-    text-align: center;
-    padding-top: 16px;
-    border-top: 1px solid var(--border);
-    color: var(--text-muted);
+.bottom-nav-btn span {
     font-size: 10px;
+    display: block;
+    margin-top: 4px;
+}
+.bottom-nav-btn:hover, .bottom-nav-btn.active {
+    color: var(--primary);
+    background: rgba(0, 255, 136, 0.1);
 }
 
-/* ========== АДАПТАЦИЯ ПОД ТЕЛЕФОН ========== */
-@media (max-width: 768px) {
-    .top-bar {
-        font-size: 10px;
-        padding: 6px 12px;
-    }
-    
-    .terminal-path {
-        font-size: 9px;
-    }
-    
-    .nav-tab {
-        font-size: 11px;
-        padding: 10px 4px;
-    }
-    
-    .page {
-        padding: 16px;
-    }
-    
-    .level-btn {
-        font-size: 11px;
-        min-width: 80px;
-        padding: 8px 12px;
-    }
-    
-    .top-item {
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-    
-    .top-medal {
-        width: 35px;
-        font-size: 20px;
-    }
-    
-    .top-rank {
-        margin-left: 47px;
-    }
-    
-    .stats-grid-mini {
-        flex-direction: column;
-        gap: 16px;
-    }
-    
-    .lesson-card {
-        padding: 12px;
-        gap: 12px;
-    }
-    
-    .lesson-number {
-        font-size: 22px;
-        min-width: 40px;
-    }
-    
-    .profile-card {
-        padding: 20px;
-    }
-    
-    .avatar {
-        font-size: 56px;
-    }
-    
-    #user-name {
-        font-size: 18px;
-    }
-    
-    .help-card {
-        padding: 16px;
-        justify-content: center;
-        text-align: center;
-    }
+/* Страницы */
+.page {
+    display: none;
+    padding: 20px;
+    animation: fadeIn 0.3s;
+}
+.page.active { display: block; }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-@media (max-width: 480px) {
-    .level-buttons {
-        flex-direction: column;
-    }
-    
-    .level-btn {
-        width: 100%;
-    }
-    
-    .top-item {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .top-medal {
-        width: auto;
-    }
-    
-    .top-rank {
-        margin-left: 0;
-    }
-    
-    .terminal-body-mini {
-        font-size: 11px;
-        overflow-x: auto;
-    }
-}
-/* РАЗВЁРНУТОЕ ДЗ */
+/* Развёрнутое ДЗ */
 .hw-header {
     text-align: center;
     margin-bottom: 24px;
 }
-
 .hw-header h2 {
     color: var(--primary);
     font-size: 22px;
 }
-
 .hw-deadline {
     color: var(--warning);
     font-size: 14px;
     margin-top: 8px;
 }
-
 .hw-card {
     background: var(--bg-card);
     border-radius: 16px;
@@ -673,7 +133,6 @@ footer {
     margin-bottom: 24px;
     border: 1px solid var(--border);
 }
-
 .hw-level {
     display: inline-block;
     padding: 4px 12px;
@@ -681,60 +140,41 @@ footer {
     font-size: 12px;
     margin-bottom: 12px;
 }
-
-.hw-level.easy {
-    background: rgba(0, 255, 136, 0.1);
-    color: #00ff88;
-}
-
-.hw-level.medium {
-    background: rgba(255, 193, 7, 0.1);
-    color: #ffc107;
-}
-
-.hw-level.hard {
-    background: rgba(255, 68, 68, 0.1);
-    color: #ff4444;
-}
-
+.hw-level.easy { background: rgba(0, 255, 136, 0.1); color: #00ff88; }
+.hw-level.medium { background: rgba(255, 193, 7, 0.1); color: #ffc107; }
+.hw-level.hard { background: rgba(255, 68, 68, 0.1); color: #ff4444; }
 .hw-title {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 12px;
 }
-
 .hw-description {
     color: var(--text-muted);
     margin-bottom: 16px;
     line-height: 1.5;
 }
-
 .hw-section {
     margin: 16px 0;
     padding: 12px;
     background: var(--bg-dark);
     border-radius: 10px;
 }
-
 .hw-section-title {
     color: var(--secondary);
     font-size: 13px;
     margin-bottom: 8px;
 }
-
 .hw-example, .hw-hint {
     color: var(--text);
     font-family: monospace;
     font-size: 13px;
     white-space: pre-wrap;
 }
-
 .hw-topics {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
 }
-
 .hw-topics span {
     background: rgba(0, 184, 255, 0.1);
     padding: 4px 10px;
@@ -742,7 +182,6 @@ footer {
     font-size: 12px;
     color: var(--secondary);
 }
-
 .hw-submit-btn {
     width: 100%;
     padding: 12px;
@@ -753,9 +192,13 @@ footer {
     font-weight: bold;
     margin-top: 16px;
     cursor: pointer;
+    transition: transform 0.2s;
+}
+.hw-submit-btn:hover {
+    transform: scale(1.02);
 }
 
-/* МОДАЛКА */
+/* Модалка */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -768,7 +211,6 @@ footer {
     justify-content: center;
     z-index: 1000;
 }
-
 .modal-window {
     background: var(--bg-card);
     border-radius: 16px;
@@ -776,7 +218,6 @@ footer {
     max-width: 500px;
     border: 1px solid var(--border);
 }
-
 .modal-header {
     display: flex;
     justify-content: space-between;
@@ -784,7 +225,6 @@ footer {
     padding: 16px;
     border-bottom: 1px solid var(--border);
 }
-
 .modal-close {
     background: none;
     border: none;
@@ -792,11 +232,9 @@ footer {
     font-size: 20px;
     cursor: pointer;
 }
-
 .modal-body {
     padding: 16px;
 }
-
 #modal-code-input {
     width: 100%;
     background: var(--bg-dark);
@@ -807,14 +245,12 @@ footer {
     font-family: monospace;
     resize: vertical;
 }
-
 .modal-footer {
     display: flex;
     gap: 12px;
     padding: 16px;
     border-top: 1px solid var(--border);
 }
-
 .modal-cancel {
     flex: 1;
     padding: 10px;
@@ -824,7 +260,6 @@ footer {
     color: var(--text);
     cursor: pointer;
 }
-
 .modal-submit {
     flex: 1;
     padding: 10px;
@@ -834,4 +269,125 @@ footer {
     color: var(--bg-dark);
     font-weight: bold;
     cursor: pointer;
+}
+
+/* Уроки */
+.lessons-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.lesson-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    gap: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.lesson-card:hover {
+    transform: translateX(5px);
+    border-color: var(--primary);
+}
+.lesson-number {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--primary);
+    min-width: 50px;
+    text-align: center;
+}
+.lesson-info h3 {
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+.lesson-info p {
+    color: var(--text-muted);
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+.lesson-meta {
+    display: flex;
+    gap: 12px;
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+/* Топ */
+.top-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.top-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+.top-medal { font-size: 24px; width: 40px; text-align: center; }
+.top-name { flex: 1; font-weight: 500; font-size: 14px; }
+.top-exp { color: var(--primary); font-weight: bold; }
+.top-rank { font-size: 11px; background: rgba(0, 255, 136, 0.1); padding: 4px 10px; border-radius: 20px; }
+
+/* Профиль */
+.profile-card {
+    background: var(--bg-card);
+    border-radius: 20px;
+    padding: 28px;
+    text-align: center;
+}
+.avatar { font-size: 72px; margin-bottom: 12px; }
+#user-name { font-size: 22px; margin-bottom: 8px; }
+.rank-badge {
+    display: inline-block;
+    padding: 6px 20px;
+    background: rgba(0, 255, 136, 0.1);
+    border-radius: 30px;
+    color: var(--primary);
+    font-size: 14px;
+    margin: 12px 0;
+}
+.exp-bar-container { margin: 20px 0; }
+.exp-bar {
+    background: var(--bg-dark);
+    border-radius: 10px;
+    height: 12px;
+    overflow: hidden;
+}
+.exp-fill {
+    background: linear-gradient(90deg, var(--primary), #00ffaa);
+    height: 100%;
+    width: 0%;
+    transition: width 0.5s;
+}
+.exp-text { font-size: 12px; color: var(--text-muted); margin-top: 8px; }
+.stats-grid-mini {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+.stat-mini { text-align: center; font-size: 13px; color: var(--text-muted); }
+.stat-mini span {
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--primary);
+    margin-top: 6px;
+}
+
+/* Адаптация под телефон */
+@media (max-width: 768px) {
+    .hw-title { font-size: 18px; }
+    .hw-section { padding: 10px; }
+    .modal-window { width: 95%; }
+    .bottom-nav-btn { font-size: 10px; padding: 4px 8px; }
+    .stat-mini { font-size: 11px; }
+    .stat-mini span { font-size: 18px; }
 }
